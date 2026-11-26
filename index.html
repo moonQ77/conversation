@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>말로 설득하기 – 설득 전략 대화 연습</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f0e6; --card:#fffdf9; --ink:#22314a; --muted:#6b7488; --line:#e7dccb;
+  --accent:#e4572e; --accent-soft:#fde3d8; --teal:#2f7d6d; --teal-soft:#dcefe9;
+  --gold:#f2b134; --gold-soft:#fdf0d2; --done:#2f9e6b; --warn:#c0841a;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.55}
+button{font:inherit;cursor:pointer}
+h1,h2,h3,.display{font-family:"Jua","Noto Sans KR",sans-serif;font-weight:400;letter-spacing:.01em}
+.hidden{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:20px}
+
+/* ---------- setup ---------- */
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:8px 0 20px}
+.hero h1{font-size:2.4rem;margin:0;line-height:1.1}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.tag{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px}
+.step h2{font-size:1.35rem;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:1rem}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{border:2px solid var(--line);background:#fff;border-radius:14px;padding:14px;text-align:left;transition:.15s;display:flex;flex-direction:column;gap:6px;color:var(--ink)}
+.card:hover{border-color:#d4c4ab;transform:translateY(-2px)}
+.card.on{border-color:var(--accent);background:var(--accent-soft)}
+.card .emoji{font-size:1.8rem}
+.card b{font-family:"Jua";font-weight:400;font-size:1.15rem}
+.card small{color:var(--muted)}
+.card li b{font-family:inherit;font-size:inherit;font-weight:700;color:var(--ink)}
+.sub{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sub label.lbl{font-weight:700;margin-right:6px;min-width:78px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;color:var(--ink)}
+.chip.on{border-color:var(--teal);background:var(--teal-soft);font-weight:700}
+.chip input{border:0;outline:0;font:inherit;width:120px;background:transparent}
+.listener-pick{display:flex;gap:12px;flex-wrap:wrap}
+.lp{border:2px solid var(--line);background:#fff;border-radius:14px;padding:6px 6px 8px;width:140px;text-align:center;color:var(--ink)}
+.lp.on{border-color:var(--teal);background:var(--teal-soft)}
+.lp .mini{width:100%;aspect-ratio:6/5;border-radius:10px;overflow:hidden;display:block}
+.lp .mini svg{width:100%;height:100%;display:block}
+.lp span{font-family:"Jua";font-size:1.1rem}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.level ul{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:.92rem}
+.goal{background:var(--gold-soft);border:1px dashed var(--gold);border-radius:14px;padding:14px 16px;font-size:.95rem}
+.goal b{color:#8a5a00}
+.start-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.name-in{border:2px solid var(--line);border-radius:12px;padding:10px 14px;font:inherit;min-width:220px;background:#fff}
+.btn{border:0;border-radius:14px;padding:12px 22px;font-weight:700;background:var(--ink);color:#fff}
+.btn.big{font-size:1.15rem;padding:14px 28px;background:var(--accent)}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.teal{background:var(--teal)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ---------- talk ---------- */
+.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.topbar h2{margin:0;font-size:1.4rem;flex:1;min-width:200px}
+.badge{border-radius:999px;padding:4px 12px;font-weight:700;font-size:.85rem}
+.badge.normal{background:var(--teal-soft);color:var(--teal)}
+.badge.easy{background:var(--gold-soft);color:#8a5a00}
+.timer{font-weight:700;border-radius:999px;padding:4px 12px;background:#fff;border:2px solid var(--line);font-variant-numeric:tabular-nums}
+.timer.low{border-color:var(--accent);color:var(--accent);animation:pulse 1s infinite}
+.badge.hard{background:var(--accent-soft);color:var(--accent)}
+.turns{display:flex;align-items:center;gap:6px;font-weight:700}
+.dots{display:flex;gap:4px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--accent);display:block}
+.dots i.used{background:#d9cfbf}
+.iconbtn{border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 12px;color:var(--ink);font-weight:500}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,1fr);gap:16px;align-items:start}
+.stage{position:relative;border-radius:20px;overflow:hidden;background:#222;box-shadow:0 10px 30px rgba(34,49,74,.18);aspect-ratio:6/5}
+.stage svg.avatar{width:100%;height:100%;display:block}
+.vidav{width:100%;height:100%;overflow:hidden;position:relative;background:#efe6dc}
+.vidav .cam{position:absolute;inset:0;transform-origin:50% 45%;will-change:transform}
+.vidav img.poster,.vidav video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vidav video{transition:opacity .4s ease}
+.vidav video.idleloop{transition:opacity .5s ease;z-index:0}
+.vidav video.clip{z-index:1;transition:none}
+.vidav canvas.lipgl{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.lp .mini .vidav,.result-hero .face .vidav{aspect-ratio:6/5;height:auto}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 80px rgba(0,0,0,.22)}
+.status{position:absolute;top:12px;left:12px;background:rgba(20,26,38,.72);color:#fff;border-radius:999px;padding:5px 12px;font-size:.85rem;display:flex;gap:8px;align-items:center;z-index:2}
+.status .led{width:9px;height:9px;border-radius:50%;background:#9aa3b2}
+.status.speaking .led{background:#ff5d5d;animation:pulse 1s infinite}
+.status.listening .led{background:#4cd18f;animation:pulse 1s infinite}
+.status.thinking .led{background:var(--gold);animation:pulse .6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.who{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.88);border-radius:999px;padding:5px 14px;font-family:"Jua";font-size:1.05rem;z-index:2}
+.subtitle{position:absolute;left:5%;right:5%;bottom:16px;text-align:center;z-index:2;pointer-events:none}
+.subtitle span{display:inline;background:rgba(15,20,30,.78);color:#fff;font-size:1.12rem;line-height:1.75;padding:4px 10px;border-radius:8px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.replay{position:absolute;right:12px;top:54px;z-index:3;background:rgba(255,255,255,.9);border:0;border-radius:999px;padding:6px 12px;font-weight:700;color:var(--ink)}
+.playover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(15,20,30,.38);z-index:4}
+.playover button{background:#fff;border:0;border-radius:999px;padding:16px 28px;font-family:"Jua";font-size:1.4rem;color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.composer{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;display:flex;gap:10px;align-items:stretch}
+.mic{flex:0 0 auto;width:72px;border-radius:14px;border:0;background:var(--accent);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;gap:2px}
+.mic svg{width:26px;height:26px}
+.mic.rec{background:#2f9e6b}
+.mic .ico-done{display:none}.mic.rec .ico-done{display:block}.mic.rec .ico-mic{display:none}
+.mic.rec::after{content:"● 듣는 중";font-size:.68rem;font-weight:500;opacity:.9;animation:pulse 1.1s infinite}
+.mic:disabled{opacity:.45;cursor:not-allowed}
+.voicehelp.strong{background:var(--gold-soft);border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;color:var(--ink)}
+.composer textarea{flex:1;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:1.05rem;resize:none;min-height:78px;background:#fff;color:var(--ink)}
+.composer textarea:focus{outline:none;border-color:var(--teal)}
+.send{flex:0 0 auto;width:86px;border-radius:14px;border:0;background:var(--ink);color:#fff;font-weight:700}
+.send:disabled{opacity:.4}
+.voicehelp{font-size:.88rem;color:var(--muted);margin-top:8px;padding:0 4px}
+.voicehelp b{color:var(--ink)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.panel h3{margin:0 0 10px;font-size:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:12px;background:#faf6ef;transition:background .4s}
+.check li.ok{background:#e4f4ea}
+.check li.flash{animation:flash 1.2s}
+@keyframes flash{0%{background:#fff3b0}100%{}}
+.box{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid #cdbfa8;display:grid;place-items:center;background:#fff;margin-top:1px}
+.ok .box{background:var(--done);border-color:var(--done)}
+.ok .box::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.check .t{font-weight:700}
+.check .d{font-size:.84rem;color:var(--muted)}
+.minis{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.mchip{font-size:.75rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.mchip.y{background:var(--done);color:#fff;border-color:var(--done)}
+.concern-list{margin:4px 0 0;padding:0;list-style:none;font-size:.85rem}
+.concern-list li{padding:2px 0;background:none;display:block}
+.concern-list li.y{color:var(--done);font-weight:700}
+.concern-list li.y::before{content:"✓ "}
+.concern-list li.n::before{content:"○ ";color:#b9ab93}
+.fb{display:flex;flex-direction:column;gap:10px}
+.fb .empty{color:var(--muted);font-size:.92rem}
+.fbrow{border-radius:12px;padding:10px 12px;font-size:.95rem}
+.fbrow.good{background:#e4f4ea}
+.fbrow.improve{background:#fdeee6}
+.fbrow b{display:block;font-size:.85rem;margin-bottom:2px}
+.fbrow.good b{color:var(--done)}
+.fbrow.improve b{color:var(--accent)}
+.schips{display:flex;flex-wrap:wrap;gap:6px}
+.schip{font-size:.8rem;border-radius:999px;padding:3px 10px;font-weight:700}
+.schip.v{background:var(--teal-soft);color:var(--teal)}
+.schip.x{background:#efe7da;color:#8b7d66;text-decoration:line-through;text-decoration-thickness:1px}
+.schip.c{background:var(--gold-soft);color:#8a5a00}
+.fbmeta{font-size:.8rem;color:var(--muted)}
+.hint{background:var(--gold-soft);border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;font-size:.92rem;margin-top:10px}
+.hint p{margin:0 0 8px}.hint p:last-child{margin:0}
+.hint em{font-style:normal;color:#7a5200;display:block;margin-top:2px;font-size:.88rem}
+.teacher-ico{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:inline-grid;place-items:center;font-size:.9rem}
+.err{background:#fdecea;color:#a12a1b;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:.92rem}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(20,26,38,.5);display:grid;place-items:center;z-index:50;padding:16px}
+.modal .inner{background:var(--card);border-radius:18px;max-width:640px;width:100%;max-height:86vh;overflow:auto;padding:20px 22px}
+.modal h3{margin:0 0 12px;font-size:1.35rem}
+.logitem{border-bottom:1px solid var(--line);padding:10px 0}
+.logitem .s{font-weight:700}
+.logitem .l{color:var(--teal)}
+.row{display:flex;align-items:center;gap:10px;margin:10px 0;flex-wrap:wrap}
+.row select,.row input[type=range]{flex:1;min-width:160px}
+select{font:inherit;padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:#fff}
+
+/* ---------- result ---------- */
+.result-hero{border-radius:20px;padding:22px 24px;display:flex;gap:20px;align-items:center;margin-bottom:16px}
+.result-hero.win{background:linear-gradient(120deg,#e4f4ea,#fdf0d2)}
+.result-hero.lose{background:linear-gradient(120deg,#f2ece2,#fde3d8)}
+.result-hero h1{margin:0;font-size:2.1rem}
+.result-hero p{margin:4px 0 0}
+.result-hero .face{width:150px;flex:0 0 150px;border-radius:16px;overflow:hidden}
+.result-hero .face svg{display:block;width:100%}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.turnfb{border-top:1px solid var(--line);padding:12px 0}
+.turnfb:first-child{border-top:0}
+.turnfb .q{font-weight:700;margin-bottom:6px}
+textarea.report{width:100%;min-height:120px;border-radius:12px;border:2px solid var(--line);padding:10px;font:inherit;font-size:.85rem;background:#fff}
+
+@media (max-width:900px){
+  .cards{grid-template-columns:1fr 1fr}
+  .grid,.rgrid,.levels{grid-template-columns:1fr}
+  .hero{flex-direction:column;align-items:flex-start}
+  .result-hero{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===================== SETUP ===================== -->
+<section id="setup">
+  <div class="hero">
+    <div>
+      <span class="tag">중3 국어 · 말하기 · 설득 전략</span>
+      <h1 style="margin-top:8px">말로 설득하기</h1>
+      <p>설득 전략을 써서 부모님과 선생님의 마음을 움직여 보세요. 상대는 말로 대답하고, 선생님이 매번 피드백을 해 줍니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2><span class="num">1</span>상황 고르기</h2>
+    <div class="cards" id="scenarioCards"></div>
+    <div id="itemRow" class="sub hidden">
+      <label class="lbl">사고 싶은 것</label>
+      <div id="itemChips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+    <div id="petRow" class="sub hidden">
+      <label class="lbl">키우고 싶은 동물</label>
+      <div id="petChips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+    </div>
+    <div id="listenerRow" class="sub hidden">
+      <label class="lbl">누구를 설득?</label>
+      <div class="listener-pick" id="listenerPick"></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2><span class="num">2</span>난이도 고르기</h2>
+    <div class="levels">
+      <button class="card level" data-level="easy">
+        <b>쉬움</b>
+        <ul>
+          <li>힌트 <b>5번까지</b> 보기 가능, 말할 기회 10번</li>
+          <li>근거와 주장의 연결이 조금 느슨해도 인정</li>
+          <li>이성·감성·인성적 설득 전략 중 <b>2가지 이상</b> 사용</li>
+          <li>상대의 걱정 3가지 중 <b>1가지 이상</b> 해결</li>
+        </ul>
+      </button>
+      <button class="card level on" data-level="normal">
+        <b>보통</b>
+        <ul>
+          <li>힌트 <b>3번까지</b> 보기 가능, 말할 기회 11번</li>
+          <li>근거와 주장의 연결이 조금 느슨해도 인정, 전략을 쓰려는 의도가 보이면 인정</li>
+          <li>이성·감성·인성적 설득 전략 <b>3가지 모두</b> 사용 (논증은 없어도 됨)</li>
+          <li>상대의 걱정 3가지 중 <b>2가지 이상</b> 해결</li>
+        </ul>
+      </button>
+      <button class="card level" data-level="hard">
+        <b>어려움</b>
+        <ul>
+          <li>힌트 <b>2번까지</b> 보기 가능, 말할 기회 12번</li>
+          <li>논증 형식을 갖춰야 인정 (귀납: 사례 2개 이상 또는 통계 / 유추: 두 대상의 유사성 / 연역: 3단 논법)</li>
+          <li>논증 1개 포함 이성적 설득 전략 <b>2가지</b>, 감성적 설득 전략 <b>1가지</b>, 인성적 설득 전략 <b>1가지</b></li>
+          <li>근거가 주장과 관련 있어야 함, 떼쓰기·협박은 감성 전략 불인정</li>
+          <li>상대의 걱정 <b>3가지 모두</b> 해결</li>
+        </ul>
+      </button>
+    </div>
+  </div>
+
+  <div class="step">
+    <h2><span class="num">3</span>성공 조건 확인하고 시작하기</h2>
+    <div class="goal" id="goalBox"></div>
+    <div class="start-row" style="margin-top:14px">
+      <input class="name-in" id="nameIn" placeholder="학번 이름 (예: 3105 김하늘)" maxlength="30">
+      <button class="btn big" id="startBtn" disabled>대화 시작하기 ▶</button>
+      <span id="startNote" style="color:var(--muted);font-size:.9rem">상황과 청자를 골라 주세요.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TALK ===================== -->
+<section id="talk" class="hidden">
+  <div class="topbar">
+    <h2 id="talkTitle"></h2>
+    <span class="badge" id="levelBadge"></span>
+    <span class="timer" id="timer">⏱ 7:30</span>
+    <div class="turns"><span>남은 기회 <span id="turnLeft">10</span></span><div class="dots" id="dots"></div></div>
+    <button class="iconbtn" id="logBtn">대화 기록</button>
+    <button class="iconbtn" id="setBtn">소리 설정</button>
+    <button class="iconbtn" id="quitBtn">그만하기</button>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="stage" id="stage">
+        <div class="status" id="status"><span class="led"></span><span id="statusText">대기 중</span></div>
+        <div class="who" id="whoTag"></div>
+        <div id="avatarHost" style="width:100%;height:100%"></div>
+        <div class="subtitle" id="subtitle"></div>
+        <button class="replay hidden" id="replayBtn">↻ 다시 듣기</button>
+        <div class="playover" id="playOver"><button id="playBtn">▶ 대화 시작</button></div>
+      </div>
+      <div class="composer">
+        <button class="mic" id="micBtn" title="눌러서 말하기">
+          <svg class="ico-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          <svg class="ico-done" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <span id="micLabel">말하기</span>
+        </button>
+        <textarea id="say" placeholder="말하기를 누르고 말한 뒤 완료를 누르세요. 말한 내용이 여기에 글자로 나타나요."></textarea>
+        <button class="send" id="sendBtn" disabled>보내기</button>
+      </div>
+      <div class="voicehelp" id="voiceHelp"></div>
+      <div id="errBox"></div>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>설득 미션 <span id="hintWrap"></span></h3>
+        <ul class="check" id="checklist"></ul>
+        <div id="hintBox"></div>
+      </div>
+      <div class="panel">
+        <h3><span style="display:flex;align-items:center;gap:8px"><span class="teacher-ico">선</span>선생님 피드백</span><span class="fbmeta" id="fbTurn"></span></h3>
+        <div class="fb" id="feedback"><div class="empty">말을 하면 선생님이 잘한 점과 보완할 점을 알려 줄 거예요.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESULT ===================== -->
+<section id="result" class="hidden"></section>
+
+</div>
+
+<div class="modal hidden" id="modal"><div class="inner" id="modalInner"></div></div>
+
+<script src="judge.js"></script>
+<script>
+/* =========================================================
+   데이터
+   ========================================================= */
+const LEVELS = {
+  easy:  {name:'쉬움',   turns:10, hints:true, hintMax:5, need:1},
+  normal:{name:'보통',   turns:11, hints:true, hintMax:3, need:2},
+  hard:  {name:'어려움', turns:12, hints:true, hintMax:2, need:3}
+};
+const TIME_LIMIT = 450;   // 7분 30초
+function LV(){ return LEVELS[state.level] || LEVELS.normal; }
+function maxTurns(){ return LV().turns; }
+const ARG = ['귀납','연역','유추'];
+const RATIONAL = ['귀납','연역','유추','통계·자료','전문가 의견','사실·사례'];
+const ALL_TYPES = [...RATIONAL,'감성','인성'];
+
+const LISTENERS = {
+  mom:{name:'엄마', voice:'female', pitch:1.22,   // 참고 음성: 평균 약 280Hz의 밝고 높은 목소리, 억양 폭 큼
+    // 여성 중음역, 밝고 또렷함, 억양 변화 큼, 잔소리·격해질 때 빨라지고 높아짐
+    prosody:{rate:1.06, vary:0.1, question:0.16, exclaim:0.14,
+      mood:{annoyed:{rate:0.14,pitch:0.12}, doubtful:{rate:0.05,pitch:0.03}, happy:{rate:0.04,pitch:0.09}, warm:{rate:0,pitch:0.04}}},
+    persona:'중학교 3학년 자녀를 둔 엄마. 친근하고 생동감이 넘치며 감정이 표정과 말에 그대로 드러난다. 걱정이 많고 꼼꼼해서 잔소리를 할 때는 말이 빨라지고 단호해진다. 자녀의 진심과 노력에는 금방 마음이 약해지지만, 근거 없이 조르면 언성이 높아진다. 자녀에게 편안한 반말로 말하며, 문장을 짧고 또렷하게 끊어 말한다. "어머", "아이고", "~잖아!" 같은 표현을 가끔 쓴다.'},
+  dad:{name:'아빠', voice:'male', pitch:0.82,
+    persona:'중학교 3학년 자녀를 둔 아빠. 차분하고 현실적이며 숫자, 계획, 약속을 중요하게 여긴다. 가끔 가벼운 농담도 한다. 자녀에게 차분한 반말로 말한다.'},
+  teacher:{name:'선생님', voice:'female', pitch:1.0,
+    persona:'학교 축제와 동아리를 담당하는 선생님. 원칙을 중시하고 학생의 안전과 배움을 먼저 생각한다. 학생을 존중하며 다정한 반말(~구나, ~니?)로 말한다.'}
+};
+
+function josa(word, a, b){ // a: 받침 있을 때, b: 없을 때
+  const ch = word.trim().slice(-1); const c = ch.charCodeAt(0);
+  if (c>=0xAC00 && c<=0xD7A3) return ((c-0xAC00)%28)? a : b;
+  if (/[0-9]/.test(ch)) return '013678'.includes(ch)? a : b;
+  return b;
+}
+
+const SCENARIOS = {
+  item:{
+    emoji:'📱', title:'갖고 싶은 물건 사 달라고 하기', desc:'엄마에게 꼭 갖고 싶은 물건을 사 달라고 설득해요.',
+    listeners:['mom'],
+    context:s=>`학생이 ${s.item}${josa(s.item,'을','를')} 사 달라고 ${LISTENERS[s.listener].name}${josa(LISTENERS[s.listener].name,'을','를')} 설득한다.`,
+    concerns:s=>[
+      {id:1, short:'가격 부담', text:`${s.item}${josa(s.item,'은','는')} 값이 비싸서 집안 살림에 부담이 된다.`},
+      {id:2, short:'공부 방해', text:'새 기기가 생기면 그것에 빠져 공부 시간이 줄고 사용 시간이 늘까 봐 걱정이다.'},
+      {id:3, short:'꼭 필요한가', text:'지금 가진 것으로도 충분해 보여서 정말 꼭 필요한지 의문이다.'}
+    ],
+    opening:s=> s.listener==='mom'
+      ? `${s.item} 사 달라고? 음, 엄마는 걱정이 좀 돼. 일단 너무 비싸고, 그게 생기면 공부는 안 하고 그것만 붙잡고 있을까 봐. 그리고 지금 쓰는 것도 아직 괜찮잖아. 엄마를 설득할 수 있으면 한번 말해 봐.`
+      : `${s.item}${josa(s.item,'이','')}라. 아빠도 이야기는 들어 볼게. 그런데 가격이 만만치 않고, 공부할 시간을 뺏길까 봐 걱정이다. 그리고 지금 있는 걸로 충분하지 않니? 아빠가 납득할 수 있게 말해 봐라.`
+  },
+  trip:{
+    emoji:'🎒', title:'친구들과 2박 3일 여행 허락받기', desc:'아빠에게 동성 친구들과 여행 가는 것을 허락받아요.',
+    listeners:['dad'],
+    context:s=>`학생이 같은 성별의 친구들과 어른 없이 2박 3일 여행을 다녀오는 것을 허락해 달라고 ${LISTENERS[s.listener].name}${josa(LISTENERS[s.listener].name,'을','를')} 설득한다.`,
+    concerns:()=>[
+      {id:1, short:'안전', text:'어른 없이 가면 사고나 위험한 상황이 생길 수 있다.'},
+      {id:2, short:'계획·연락', text:'숙소, 일정, 이동 방법이 제대로 정해져 있는지, 연락은 잘 될지 모르겠다.'},
+      {id:3, short:'비용', text:'여행 경비가 꽤 들어서 부담된다.'}
+    ],
+    opening:s=> s.listener==='mom'
+      ? `친구들이랑 2박 3일 여행을? 어른도 없이? 엄마는 무엇보다 안전이 제일 걱정이야. 어디서 자고 뭘 할지 계획도 모르겠고, 돈도 꽤 들 텐데. 엄마가 안심할 수 있게 말해 줄래?`
+      : `친구들끼리만 2박 3일이라. 아빠는 먼저 안전이 걱정이다. 숙소랑 일정은 정했는지, 연락은 잘 될지도 궁금하고. 경비도 적지 않을 거고. 아빠가 허락할 만한 이유를 들려줘 봐라.`
+  },
+  pet:{
+    emoji:'🐶', title:'반려동물 키우기 허락받기', desc:'아빠에게 강아지나 고양이를 키우자고 설득해요.',
+    listeners:['dad'],
+    context:s=>`학생이 집에서 ${s.pet}${josa(s.pet,'을','를')} 키우자고 아빠를 설득한다.`,
+    concerns:s=>[
+      {id:1, short:'돌볼 책임', text:'처음에만 좋아하고 밥, 산책, 배변 처리 같은 매일의 돌봄을 결국 부모가 떠맡게 될까 걱정이다.'},
+      {id:2, short:'비용', text:`사료, 예방접종, 병원비 등 ${s.pet}${josa(s.pet,'을','를')} 키우는 데 드는 돈이 부담된다.`},
+      {id:3, short:'집 환경', text:'털 날림과 위생, 가족이 모두 나가 있을 때 혼자 남는 문제가 걱정이다.'}
+    ],
+    opening:s=>`${s.pet}${josa(s.pet,'을','를')} 키우고 싶다고? 아빠도 귀여운 건 안다. 그런데 매일 누가 돌볼 건지, 사료값이랑 병원비는 어떻게 할지 걱정이다. 집에 털 날리고, 다들 나가면 혼자 남는 것도 마음에 걸리고. 아빠를 설득해 봐라.`
+  },
+  booth:{
+    emoji:'🎪', title:'축제 동아리 부스 운영 건의하기', desc:'부스가 없는 축제에 동아리 부스를 열자고 선생님께 건의해요.',
+    listeners:['teacher'],
+    context:()=>`올해 학교 축제는 부스 운영 없이 공연 위주로 진행하기로 정해진 상황이다. 학생이 자기 동아리의 부스를 운영하게 해 달라고 선생님에게 건의한다. 선생님은 어떤 부스를 어떻게 운영할지 구체적인 계획을 듣고 싶어 한다.`,
+    concerns:()=>[
+      {id:1, short:'안전·질서', text:'부스를 운영하다 사고나 혼란이 생기면 책임 문제가 생긴다.'},
+      {id:2, short:'준비 부담', text:'준비하느라 수업과 공부에 지장이 생길까 걱정이다.'},
+      {id:3, short:'필요성', text:'이미 정해진 축제 방식이 있는데 부스가 왜 꼭 필요한지, 학생들이 무엇을 배우는지 의문이다.'}
+    ],
+    opening:()=>`동아리 부스를 하고 싶다고? 올해 축제는 부스 없이 공연 위주로 하기로 한 거 알지? 선생님은 안전 관리가 제일 걱정이고, 준비하느라 공부에 지장이 생길까 봐 걱정돼. 그리고 부스가 꼭 필요한 이유도 궁금하구나. 어떤 부스를 어떻게 운영할 건지 구체적으로 말해 보렴.`
+  }
+};
+const ITEMS = ['아이폰 18 프로','아이패드','컴퓨터'];
+const PETS = ['강아지','고양이'];
+// 말할 기회를 다 썼거나 제한 시간이 지났을 때 (대사 시트 3번과 같은 문장)
+const END_LINES = {
+  item:'오늘은 여기까지 하자. 아직은 엄마 마음이 안 정해졌어. 더 생각해 보고 다시 얘기해.',
+  trip:'오늘은 여기까지 하자. 계획을 더 다듬어서 다시 얘기해 보자.',
+  pet:'오늘은 여기까지 하자. 생명을 들이는 일이니 아빠도 더 생각해 보마.',
+  booth:'오늘은 여기까지 하자. 다음에 다시 이야기해 보자.'
+};
+
+/* 힌트(보통 난이도) 예시 */
+const EXAMPLES = {
+  item:{
+    귀납:'"제 친구 민수도 태블릿으로 인강을 들으면서 성적이 올랐고, 사촌 언니도 그랬어요. 기기를 공부에 쓰면 도움이 돼요."',
+    연역:'"공부에 꼭 필요한 도구는 사 줄 만해요. 이건 제가 수행평가와 인강에 쓸 공부 도구예요. 그러니까 사 줄 만해요."',
+    유추:'"운동선수에게 좋은 운동화가 기록을 높여 주듯이, 학생에게 좋은 기기는 공부 효율을 높여 줘요."',
+    감성:'"이걸로 열심히 공부해서 좋은 성적표를 보여 드리면 정말 뿌듯하실 거예요."',
+    인성:'"작년에 하루 휴대폰 2시간 약속을 1년 내내 지켰잖아요. 이번에도 그렇게 지킬게요."'
+  },
+  trip:{
+    귀납:'"옆 반 친구들도, 사촌 형도 중3 때 친구들과 여행을 다녀왔는데 모두 무사히 잘 다녀왔대요."',
+    연역:'"계획을 꼼꼼히 세우고 연락을 잘하는 여행은 안전해요. 우리 여행은 일정표와 연락 계획을 다 세웠어요. 그러니까 안전해요."',
+    유추:'"수학여행 때 규칙을 지켜서 안전했던 것처럼, 우리도 규칙을 정해서 지키면 안전할 거예요."',
+    감성:'"졸업 전에 친구들과 소중한 추억을 만들고 싶어요. 엄마 아빠도 학생 때 친구들과의 추억이 있으시잖아요."',
+    인성:'"저는 학원 끝나면 늘 바로 연락드리고, 귀가 시간도 한 번도 어긴 적 없어요."'
+  },
+  pet:{
+    귀납:'"제 친구 지민이네도, 사촌 형네도 동물을 키우면서 가족끼리 대화가 늘었대요. 반려동물은 가족을 가깝게 해 줘요."',
+    연역:'"책임감은 무언가를 꾸준히 돌볼 때 길러져요. 반려동물을 키우는 건 매일 꾸준히 돌보는 일이에요. 그러니까 저의 책임감이 길러질 거예요."',
+    유추:'"화분에 매일 물을 주며 키워 본 것처럼, 반려동물도 정해진 시간에 밥과 산책을 챙기면 잘 키울 수 있어요."',
+    감성:'"학원 갔다 와서 텅 빈 집에 들어갈 때마다 외로웠어요. 반겨 주는 친구가 있으면 정말 행복할 것 같아요."',
+    인성:'"지난 1년 동안 제 방 청소를 매일 했던 것처럼, 맡은 일은 끝까지 해요."'
+  },
+  booth:{
+    귀납:'"재작년 우리 학교 축제에서도, 작년 옆 학교 축제에서도 부스가 있을 때 참여 학생이 훨씬 많았어요."',
+    연역:'"학생이 직접 기획하는 활동은 축제의 의미를 살려요. 동아리 부스는 학생이 직접 기획하는 활동이에요. 그러니까 부스는 축제의 의미를 살려요."',
+    유추:'"수업에서 모둠 활동을 할 때 더 잘 배우듯이, 축제도 학생이 직접 운영할 때 더 많이 배워요."',
+    감성:'"1년 동안 동아리에서 열심히 준비한 걸 친구들에게 보여 줄 기회가 없다면 정말 아쉬울 것 같아요."',
+    인성:'"저희 동아리는 지난 학기 활동 보고서를 한 번도 늦지 않고 냈어요. 맡은 일은 책임지고 해요."'
+  }
+};
+
+const STILL = { mom:'media/mom/poster.jpg' };
+// 캐릭터 영상: 업로드된 영상 파일 경로를 넣으면 자동으로 사용 (없으면 사진만 표시)
+const MEDIA = {
+  // 엄마: 대사 시트 번호(1~15)마다 입 모양까지 맞춘 영상. AI가 판정한 뒤 알맞은 영상을 골라 틀어 줌
+  mom:{ idleLoop:'media/mom/idle.mp4', clips:{"1": "media/mom/1.mp4", "2": "media/mom/2.mp4", "3": "media/mom/3.mp4", "4": "media/mom/4.mp4", "5": "media/mom/5.mp4", "6": "media/mom/6.mp4", "7": "media/mom/7.mp4", "8": "media/mom/8.mp4", "9": "media/mom/9.mp4", "10": "media/mom/10.mp4", "11": "media/mom/11.mp4", "12": "media/mom/12.mp4", "13": "media/mom/13.mp4", "14": "media/mom/14.mp4", "15": "media/mom/15.mp4"},
+    lines:{"1": "그걸 사 달라고? 엄마는 걱정이 좀 돼. 너무 비싸고, 공부도 안 할까 봐. 지금 쓰는 것도 멀쩡하잖아. 엄마를 한번 설득해 봐.", "2": "그래, 네 말을 들으니 엄마가 설득됐어. 사 줄게. 대신 약속은 꼭 지켜!", "3": "오늘은 여기까지 하자. 아직은 엄마 마음이 안 정해졌어. 더 생각해 보고 다시 얘기해.", "4": "그렇게 근거를 대니까 일리가 있네.", "5": "아이고, 그렇게 말하니 엄마 마음이 좀 약해지네.", "6": "그래, 네가 그렇게까지 하는 걸 보니 믿음이 간다.", "7": "음, 그것만으로는 잘 모르겠어. 다른 이유를 더 말해 봐.", "8": "그렇게 조른다고 되는 게 아니야. 엄마가 납득할 이유를 말해 봐.", "9": "그래도 너무 비싸잖아. 그 돈은 어떻게 할 건데?", "10": "그렇게 하면 돈 걱정은 좀 덜겠네.", "11": "근데 그게 생기면 공부는 언제 해? 그게 제일 걱정이야.", "12": "그 약속대로만 하면 공부 걱정은 안 해도 되겠네.", "13": "지금 쓰는 것도 멀쩡한데, 왜 꼭 새로 사야 해?", "14": "듣고 보니 꼭 필요하긴 하겠네.", "15": "엄마 마음이 거의 넘어갔어. 하나만 더 말해 봐."} }
+};
+
+/* =========================================================
+   캐릭터 (SVG) — 이후 제공받을 이미지로 교체 예정
+   ========================================================= */
+const CHAR = {
+  mom:{video:'mom'},   // 실사 영상 캐릭터 (영상이 없으면 주방 사진)
+  dad:{skin:'#eec3a1', shade:'#dba985', hair:'#1f1f24', lip:'#b45a55', bg:'home',
+    back:'',
+    front:`<path d="M163 162 C156 88 210 62 246 64 C294 66 326 98 317 162 C312 128 298 110 278 104 C250 96 214 98 190 114 C176 126 168 142 163 162 Z" fill="#1f1f24"/>
+           <path d="M163 160 L166 192 L172 192 L170 150 Z M317 160 L314 192 L308 192 L310 150 Z" fill="#1f1f24"/>`,
+    body:`<path d="M96 400 C104 314 166 284 240 284 C314 284 376 314 384 400 Z" fill="#34507a"/>
+          <path d="M210 282 L230 312 L240 290 Z M270 282 L250 312 L240 290 Z" fill="#e9eef6"/>
+          <path d="M240 292 L240 400" stroke="#2a4266" stroke-width="3"/>
+          <circle cx="240" cy="330" r="3.5" fill="#e9eef6"/><circle cx="240" cy="362" r="3.5" fill="#e9eef6"/>`,
+    extra:`<g fill="rgba(255,255,255,.12)" stroke="#2a2a2a" stroke-width="4"><rect x="188" y="150" width="48" height="34" rx="11"/><rect x="244" y="150" width="48" height="34" rx="11"/></g>
+           <path d="M236 164 Q240 160 244 164" stroke="#2a2a2a" stroke-width="4" fill="none"/>
+           <path d="M188 162 L168 158 M292 162 L312 158" stroke="#2a2a2a" stroke-width="4"/>`},
+  teacher:{skin:'#f5cfb2', shade:'#e5b493', hair:'#3a2a20', lip:'#c25a62', bg:'school',
+    back:`<circle cx="240" cy="70" r="32" fill="#3a2a20"/><path d="M214 84 Q240 96 266 84" stroke="#e4572e" stroke-width="6" fill="none"/>`,
+    front:`<path d="M163 168 C156 94 206 72 244 72 C292 72 324 100 317 168 C304 128 272 104 238 104 C232 120 200 140 163 168 Z" fill="#3a2a20"/>
+           <path d="M163 166 C160 186 162 204 166 214 L172 212 C168 196 168 180 170 166 Z M317 166 C320 186 318 204 314 214 L308 212 C312 196 312 180 310 166 Z" fill="#3a2a20"/>`,
+    body:`<path d="M96 400 C104 314 166 284 240 284 C314 284 376 314 384 400 Z" fill="#5f7f6f"/>
+          <path d="M210 286 L240 340 L270 286 Z" fill="#f4efe6"/>
+          <path d="M210 286 L240 340 L222 400 M270 286 L240 340 L258 400" stroke="#4d6a5c" stroke-width="3" fill="none"/>
+          <path d="M222 290 L256 350 M258 290 L262 350" stroke="#e4572e" stroke-width="3"/>
+          <rect x="246" y="348" width="32" height="40" rx="4" fill="#fff"/><rect x="252" y="356" width="20" height="12" rx="2" fill="#cfe3dc"/><rect x="252" y="374" width="20" height="3" fill="#b9c2c9"/>`,
+    extra:''}
+};
+
+function bgSVG(kind){
+  if (kind==='school') return `
+    <rect width="480" height="400" fill="#e7eee3"/>
+    <rect x="0" y="300" width="480" height="100" fill="#d9e3d5"/>
+    <rect x="26" y="26" width="428" height="196" rx="8" fill="#8a6a4f"/>
+    <rect x="36" y="36" width="408" height="174" rx="4" fill="#2f5a4a"/>
+    <text x="56" y="84" font-family="Jua, sans-serif" font-size="28" fill="#f4f1e6" opacity=".92">축제 D-14</text>
+    <path d="M58 104 h104 M58 124 h76" stroke="#f4f1e6" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+    <text x="340" y="80" font-family="Jua, sans-serif" font-size="20" fill="#f7e27a" opacity=".9">★ 동아리</text>
+    <path d="M346 100 q20 -14 40 0 t40 0" stroke="#f4f1e6" stroke-width="3" fill="none" opacity=".5"/>
+    <circle cx="400" cy="160" r="16" stroke="#f4f1e6" stroke-width="3" fill="none" opacity=".45"/>
+    <rect x="30" y="210" width="420" height="10" rx="3" fill="#a3825f"/>
+    <rect x="70" y="205" width="22" height="6" rx="2" fill="#fff"/><rect x="100" y="205" width="16" height="6" rx="2" fill="#f7e27a"/>`;
+  return `
+    <rect width="480" height="400" fill="#f3e3cc"/>
+    <rect x="0" y="0" width="480" height="18" fill="#ead6b9"/>
+    <rect x="26" y="40" width="124" height="156" rx="6" fill="#fff8ee"/>
+    <rect x="34" y="48" width="108" height="140" rx="3" fill="#bfe0f2"/>
+    <circle cx="66" cy="84" r="13" fill="#fff3c4"/>
+    <path d="M34 160 Q66 136 98 156 T142 150 V188 H34 Z" fill="#9fcf9a"/>
+    <rect x="86" y="48" width="4" height="140" fill="#fff8ee"/><rect x="34" y="116" width="108" height="4" fill="#fff8ee"/>
+    <rect x="350" y="54" width="88" height="66" rx="4" fill="#c99a6b"/><rect x="357" y="61" width="74" height="52" fill="#fbe9c9"/>
+    <circle cx="380" cy="92" r="9" fill="#f2a28c"/><circle cx="404" cy="86" r="11" fill="#9fcf9a"/>
+    <path d="M404 176 h46 l-9 -36 h-28 z" fill="#f2c46d"/><rect x="425" y="176" width="4" height="130" fill="#8a6a4f"/>
+    <rect x="-20" y="290" width="520" height="130" rx="34" fill="#87a898"/>
+    <rect x="-20" y="290" width="520" height="16" rx="8" fill="#9bbbab"/>`;
+}
+
+function eyeOf(C){ return Object.assign({rx:7.5, ry:9.5, hl:true, y:167}, C.eye||{}); }
+function browOf(C){ return Object.assign({l:[198,227], r:[253,282], y:140, w:5, color:null}, C.brow||{}); }
+// 눈썹 경로: bl/br = [안쪽 오프셋, 바깥쪽 오프셋] (음수 = 위로)
+function browD(C, bl, br){
+  const B = browOf(C), y = B.y;
+  return {
+    l:`M${B.l[0]} ${y+2+bl[1]} Q${(B.l[0]+B.l[1])/2} ${y-6+(bl[0]+bl[1])/2} ${B.l[1]} ${y+bl[0]}`,
+    r:`M${B.r[0]} ${y+br[0]} Q${(B.r[0]+B.r[1])/2} ${y-6+(br[0]+br[1])/2} ${B.r[1]} ${y+2+br[1]}`
+  };
+}
+let uidN = 0;
+function avatarSVG(kind){
+  const C = CHAR[kind]; const u = 'a'+(++uidN);
+  if (C.video){
+    return `<div class="avatar vidav" data-uid="${u}"><div class="cam">
+      <img class="poster" src="${STILL[C.video]}" alt="">
+      <video class="clip c0" muted playsinline loop preload="auto"></video>
+      <video class="clip c1" muted playsinline loop preload="auto"></video>
+      <canvas class="lipgl" width="960" height="800"></canvas>
+    </div></div>`; }
+  if (C.kit && typeof KIT!=='undefined'){ const Kt = KIT[C.kit];
+    const lay = (k)=>{ const v = Kt[k]; return `<image class="v" data-k="${k}" href="${v.src}" x="${v.x}" y="${v.y}" width="${v.w}" height="${v.h}" preserveAspectRatio="none" opacity="0"/>`; };
+    return `<svg class="avatar" viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" data-uid="${u}">
+  <rect width="480" height="400" fill="#efe6dc"/>
+  <g class="cam">
+    <image href="${Kt.base}" x="0" y="0" width="480" height="400" preserveAspectRatio="none"/>
+    ${['mA','mE','mI','mO','mU','xA','xE','xI'].map(lay).join('')}
+    ${lay('brow')}${lay('blink')}
+  </g>
+</svg>`; }
+  if (C.img) return `<svg class="avatar" viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" data-uid="${u}">
+  ${bgSVG(C.bg)}
+  <defs>
+    <image id="${u}-img" href="${IMG[C.img]}" x="0" y="0" width="480" height="400.4" preserveAspectRatio="none"/>
+    <filter id="${u}-fb" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <mask id="${u}-jm" maskUnits="userSpaceOnUse" x="0" y="0" width="480" height="420"><path d="${C.jaw}" fill="#fff" filter="url(#${u}-fb)"/></mask>
+    <clipPath id="${u}-mc"><path class="mouth-clip"/></clipPath>
+    <filter id="${u}-fl" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="1.3"/></filter>
+  </defs>
+  <g class="av-body"><g class="av-head">
+    <use href="#${u}-img"/>
+    <path class="mouth-in" fill="#4a1a20" style="display:none"/>
+    <g clip-path="url(#${u}-mc)"><rect class="teeth" x="200" width="80" fill="#dccbc3" opacity=".85"/><ellipse class="tongue" cx="240" fill="#a8474f"/></g>
+    <use class="jaw" href="#${u}-img" mask="url(#${u}-jm)"/>
+    <g filter="url(#${u}-fl)">${C.eyes.map(()=>`<path class="lid" fill="${C.lid}" style="display:none"/>`).join('')}</g>
+    ${C.eyes.map(()=>`<path class="lash" stroke="${C.lash}" stroke-width="1.5" opacity=".8" fill="none" stroke-linecap="round" style="display:none"/>`).join('')}
+  </g></g>
+</svg>`;
+  return `<svg class="avatar" viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" data-uid="${u}">
+  ${bgSVG(C.bg)}
+  <g class="av-body">
+    ${C.body}
+    ${C.neck || `<rect x="216" y="226" width="48" height="68" rx="20" fill="${C.shade}"/>`}
+    <g class="av-head">
+      ${C.back}
+      ${C.noEars? '' : `<ellipse cx="165" cy="172" rx="11" ry="17" fill="${C.shade}"/><ellipse cx="315" cy="172" rx="11" ry="17" fill="${C.shade}"/>`}
+      ${C.face? `<path d="${C.face}" fill="${C.skin}"/>` : `<ellipse cx="240" cy="160" rx="76" ry="88" fill="${C.skin}"/>`}
+      ${(()=>{ const ck = C.cheek||{rx:14,ry:8,op:.35,y:200,dx:42};
+        return `<ellipse cx="${240-ck.dx}" cy="${ck.y}" rx="${ck.rx}" ry="${ck.ry}" fill="#f29a8f" opacity="${ck.op}"/><ellipse cx="${240+ck.dx}" cy="${ck.y}" rx="${ck.rx}" ry="${ck.ry}" fill="#f29a8f" opacity="${ck.op}"/>`; })()}
+      ${[212,268].map(x=>{ const E = eyeOf(C), y = E.y;
+        return `<g class="eye" data-cx="${x}" data-cy="${y}"><g class="eye-open"><ellipse cx="${x}" cy="${y}" rx="${E.rx}" ry="${E.ry}" fill="#1c1a1d"/>${E.hl?`<circle cx="${x+2.5}" cy="${y-3.5}" r="2.4" fill="#fff"/>`:''}</g>
+        <path class="eye-happy" d="M${x-9} ${y+3} Q${x} ${y-8} ${x+9} ${y+3}" stroke="#1c1a1d" stroke-width="3.6" fill="none" stroke-linecap="round" style="display:none"/></g>`; }).join('')}
+      <path class="brow-l" stroke="${browOf(C).color||C.hair}" stroke-width="${browOf(C).w}" stroke-linecap="round" fill="none"/>
+      <path class="brow-r" stroke="${browOf(C).color||C.hair}" stroke-width="${browOf(C).w}" stroke-linecap="round" fill="none"/>
+      ${C.nose || `<path d="M240 178 Q247 194 238 198" stroke="${C.shade}" stroke-width="3" fill="none" stroke-linecap="round"/>`}
+      <clipPath id="${u}-mc"><path class="mouth-clip"/></clipPath>
+      <path class="mouth-in" fill="#6b2a2f"/>
+      <g clip-path="url(#${u}-mc)">
+        <rect class="teeth" x="200" width="80" fill="#fff"/>
+        <ellipse class="tongue" cx="240" fill="#d9707a"/>
+      </g>
+      <path class="mouth-line" stroke="${C.lip}" stroke-width="3.2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      ${C.front}
+      ${C.extra}
+    </g>
+  </g>
+</svg>`;
+}
+
+/* 표정 */
+const MOODS = {
+  // speak: 말할 때 입꼬리, open: 말할 때 입 벌림 배율
+  neutral:{bl:[0,0], br:[0,0], smile:2, speak:1, open:1, happy:false},
+  doubtful:{bl:[-3,-7], br:[4,1], smile:-1, speak:0, open:1, happy:false},
+  warm:{bl:[-3,-4], br:[-3,-4], smile:5, speak:3, open:1.05, happy:false},
+  happy:{bl:[-6,-7], br:[-6,-7], smile:9, speak:6, open:1.15, happy:true},
+  annoyed:{bl:[6,0], br:[6,0], smile:-5, speak:-6, open:1.3, happy:false},
+  thinking:{bl:[-5,-6], br:[1,1], smile:0, speak:0, open:1, happy:false}
+};
+const SHAPES = { rest:{w:34,h:0}, closed:{w:30,h:0}, A:{w:42,h:24}, E:{w:44,h:14}, O:{w:26,h:20}, I:{w:44,h:5}, U:{w:22,h:9} };
+const VOWEL_SHAPE = ['A','E','A','E','E','E','E','E','O','A','E','E','O','U','E','E','I','U','I','I','I'];
+
+/* 실시간 입 여닫기 (WebGL): 재생 중인 말하는 영상의 아랫입술·턱 부분만 위아래로 부드럽게 옮김 */
+const LipGL = {
+  make(canvas){
+    let gl = null;
+    try{ gl = canvas.getContext('webgl', {alpha:false, antialias:false, premultipliedAlpha:false}) || canvas.getContext('experimental-webgl'); }catch(e){}
+    if (!gl) return null;
+    const vs = `attribute vec2 a; varying vec2 uv; void main(){ uv = vec2((a.x+1.0)*0.5, (1.0-a.y)*0.5); gl_Position = vec4(a,0.0,1.0); }`;
+    const fs = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+uniform sampler2D tex; uniform vec2 res;
+uniform float mx, yu, yl, hw0, tt, kk, sh;
+varying vec2 uv;
+float sst(float e0, float e1, float x){ float t = clamp((x-e0)/max(e1-e0,1e-4), 0.0, 1.0); return t*t*(3.0-2.0*t); }
+void main(){
+  vec2 p = uv*res;
+  float hw = max(30.0, hw0);
+  float dx = p.x - mx; float ax = abs(dx);
+  float dxc = clamp(dx, -hw*1.1, hw*1.1);
+  float ytop = yu + tt*dxc + kk*dxc*dxc;
+  float wx = exp(-pow(max(ax - hw*0.9, 0.0)/75.0, 2.0));
+  float e = 0.01 + 22.0*clamp((ax - hw*0.95)/40.0, 0.0, 1.0);
+  float top = sst(ytop - e, ytop + e, p.y);
+  float chin = yl + 45.0;
+  float fade = 1.0 - sst(chin, chin + 110.0, p.y);
+  float w = wx*top*fade;
+  float sy;
+  if (sh >= 0.0){ sy = p.y + sh*w; }
+  else {
+    float op = -sh; float q = p.y - ytop; float s = max(2.0, yl - yu); float ow = op*w;
+    if (q < 0.0) sy = p.y; else if (q < s + ow) sy = ytop + q*s/max(s + ow, 0.001); else sy = p.y - ow;
+  }
+  gl_FragColor = texture2D(tex, vec2(p.x/res.x, clamp(sy, 0.5, res.y-0.5)/res.y));
+}`;
+    const sh = (type, src)=>{ const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+    try{
+      const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error('link');
+      gl.useProgram(pr);
+      const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      const U = {}; ['tex','res','mx','yu','yl','hw0','tt','kk','sh'].forEach(n=>U[n] = gl.getUniformLocation(pr, n));
+      gl.uniform1i(U.tex, 0); gl.uniform2f(U.res, canvas.width, canvas.height);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      return {
+        upload(video){ gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video); },
+        draw(P){
+          gl.uniform1f(U.mx, P.mx); gl.uniform1f(U.yu, P.yu); gl.uniform1f(U.yl, P.yl); gl.uniform1f(U.hw0, P.hw);
+          gl.uniform1f(U.tt, P.t); gl.uniform1f(U.kk, P.k); gl.uniform1f(U.sh, P.shift);
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+      };
+    }catch(e){ console.warn('LipGL', e); return null; }
+  }
+};
+/* 대사 영상 재생기: 정해진 대사 영상을 차례로 틀고, 사이사이는 정지 화면 */
+const FRONT_CLIP = {'이성':4,'감성':5,'인성':6,'부족':7,'떼쓰기':8,'해결1':10,'해결2':12,'해결3':14};
+const REMAIN_CLIP = {1:9, 2:11, 3:13};
+const CLIP_SEC = {1:11,2:7,3:7,4:4,5:5,6:5,7:5,8:5,9:4,10:4,11:5,12:5,13:4,14:4,15:4};
+// 듣는 영상에서 정면을 보고 가만히 있는 구간(초). 대사 영상은 이 장면에서 시작하고 이 장면으로 끝남
+const IDLE_REST = [[0.0, 1.542], [1.833, 2.458], [3.333, 5.042], [5.333, 6.25], [7.125, 8.667], [8.958, 9.792], [11.625, 13.792], [14.667, 16.792], [17.667, 18.458], [18.75, 20.375], [21.25, 21.708], [22.0, 24.125], [25.958, 26.917], [27.208, 28.25], [30.083, 31.042], [31.333, 32.75], [33.625, 36.167], [37.042, 39.375], [40.25, 43.167], [45.0, 45.458], [45.75, 47.292], [48.167, 48.917], [49.208, 50.333], [51.208, 54.208], [56.042, 58.333], [59.208, 59.75], [60.042, 62.25]];
+const Clips = {
+  token:0, front:0, timer:null, blobs:{},
+  on(){ return state.listener==='mom' && state.scenario==='item' && !!(MEDIA.mom && MEDIA.mom.clips); },
+  els(){ const V = Avatar.vid; return V && V.el.isConnected && V.slots ? V.slots : null; },
+  idle(){ const V = Avatar.vid; return V && V.idleEl; },
+  line(id){ return MEDIA.mom.lines[id] || ''; },
+  url(id){ return this.blobs[id] || MEDIA.mom.clips[id]; },
+  preload(){
+    if (this._pre) return; this._pre = true;
+    fetch(MEDIA.mom.idleLoop).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) this.idleBlob = URL.createObjectURL(b); }).catch(()=>{});
+    Object.entries(MEDIA.mom.clips).forEach(([id,u])=>{
+      fetch(u).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) this.blobs[id] = URL.createObjectURL(b); }).catch(()=>{});
+    });
+  },
+  atRest(){ const iv = this.idle(); if (!iv) return true; const t = iv.currentTime;
+    return IDLE_REST.some(([a,b])=>t>=a && t<=b-0.15); },
+  // 듣는 영상을 '가만히 있는 구간'의 처음으로 옮겨 멈춰 둠 (대사 영상 뒤에 가려져 있을 때)
+  parkIdle(){ const iv = this.idle(); if (!iv) return; try{ iv.pause();
+    const t = iv.currentTime, runs = IDLE_REST.filter(([a,b])=>b-a>=1.2);
+    const r = runs.find(([a])=>a>t) || runs[0];
+    // 미리 받아 둔 듣는 영상으로 바꿔 두면 원하는 장면으로 정확히 옮길 수 있음 (가려져 있을 때만)
+    if (this.idleBlob && iv.getAttribute('src')!==this.idleBlob){
+      iv.setAttribute('src', this.idleBlob); iv.addEventListener('loadedmetadata', ()=>{ try{ iv.currentTime = r[0]; }catch(e){} }, {once:true}); iv.load();
+    } else iv.currentTime = r[0]; }catch(e){} },
+  resumeIdle(){ const iv = this.idle(); if (iv){ const p = iv.play(); if (p && p.catch) p.catch(()=>{}); } },
+  visible(){ const vs = this.els(); return vs ? vs.find(v=>v.style.opacity==='1') : null; },
+  play(ids, after){
+    const tok = ++this.token; ids = ids.filter(Boolean);
+    state.lastClips = ids.slice(); $('#replayBtn').classList.add('hidden');
+    const finish = ()=>{
+      const vs = this.els(); if (vs) vs.forEach(v=>{ v.style.opacity = 0; });
+      this.resumeIdle();
+      Avatar.setMode('idle'); setStatus('idle'); $('#replayBtn').classList.remove('hidden');
+      after && after();
+    };
+    const next = ()=>{
+      if (tok!==this.token) return;
+      clearTimeout(this.timer);
+      const id = ids.shift(); const vs = this.els();
+      if (id==null || !vs){ finish(); return; }
+      const v = vs[this.front], o = vs[1-this.front], src = this.url(id);
+      this.front = 1-this.front;
+      v.muted = false; v.loop = false; v.onended = null; v.onplaying = null; v.style.zIndex = 3; o.style.zIndex = 2;
+      if (v.getAttribute('src')!==src){ v.setAttribute('src', src); try{ v.load(); }catch(e){} }
+      try{ v.currentTime = 0; }catch(e){}
+      const go = ()=>{
+        if (tok!==this.token) return;
+        showSubtitle(this.line(id)); Avatar.mode = 'speaking'; setStatus('speaking');
+        v.onplaying = ()=>{ if (tok!==this.token) return; v.onplaying = null;
+          v.style.opacity = 1; o.style.opacity = 0; try{ o.pause(); }catch(e){} this.parkIdle(); };
+        let handed = false;
+        const hand = ()=>{ if (handed || tok!==this.token) return; handed = true; clearTimeout(this.timer);
+          if (ids.length) next(); else finish(); };
+        v.onended = hand;
+        this.timer = setTimeout(hand, ((CLIP_SEC[id]||6)+4)*1000);
+        const pr = v.play();
+        if (pr && pr.then) pr.then(()=>{ if (v.onplaying) setTimeout(()=>{ if (v.onplaying && !v.paused) v.onplaying(); }, 120); }).catch(()=>{});
+        if (pr && pr.catch) pr.catch(()=>{ // 영상을 틀 수 없으면 목소리로라도 말함
+          if (tok!==this.token || handed) return; handed = true; clearTimeout(this.timer); v.style.opacity = 0;
+          Voice.speak(this.line(id), 'mom', ()=>{ if (tok===this.token){ ids.length ? next() : finish(); } }); });
+      };
+      // 듣는 영상이 보이는 중이면, 끄덕임이나 깜빡임이 끝나 정면 정지 장면일 때 시작
+      if (this.visible()) go();
+      else { const t0 = performance.now();
+        const wait = ()=>{ if (tok!==this.token) return; if (this.atRest() || performance.now()-t0 > 2200) go(); else requestAnimationFrame(wait); };
+        wait(); }
+    };
+    next();
+  },
+  stop(){
+    this.token++; clearTimeout(this.timer);
+    const vs = this.els(); if (vs) vs.forEach(v=>{ v.style.opacity = 0; v.onended = null; v.onplaying = null; try{ v.pause(); }catch(e){} });
+    this.resumeIdle();
+  }
+};
+const LIP_OPEN = {rest:0, closed:0, I:0.25, U:0.4, E:0.55, O:0.6, A:0.95};
+
+/* 아바타 컨트롤러 */
+const Avatar = {
+  el:null, kind:null, mode:'idle', mood:'neutral',
+  cur:{w:34,h:0,smile:2}, target:{w:34,h:0}, smileCur:2,
+  blinkAt:0, blinkT:0, brow:{bl:[0,0],br:[0,0]},
+  mount(host, kind){
+    host.innerHTML = avatarSVG(kind); this.kind = kind; this.C = CHAR[kind];
+    if (this.C.video){ this.el = host.querySelector('.vidav'); this.mountVideo(); if (!this._loop){ this._loop = true; requestAnimationFrame(t=>this.tick(t)); } return; }
+    this.el = host.querySelector('svg');
+    this.q = s=>this.el.querySelector(s);
+    this.parts = { head:this.q('.av-head'), body:this.q('.av-body'), eyes:[...this.el.querySelectorAll('.eye')],
+      bl:this.q('.brow-l'), br:this.q('.brow-r'), mIn:this.q('.mouth-in'), mLine:this.q('.mouth-line'), mClip:this.q('.mouth-clip'),
+      teeth:this.q('.teeth'), tongue:this.q('.tongue'), jaw:this.q('.jaw'),
+      lids:[...this.el.querySelectorAll('.lid')], lashes:[...this.el.querySelectorAll('.lash')] };
+    if (this.C.img){ this.cur = {w:this.C.mouth.half, h:0, smile:0}; }
+    if (this.C.kit){ this.layers = {}; this.el.querySelectorAll('image.v').forEach(n=>{ this.layers[n.dataset.k] = {n, o:0}; }); this.cam = this.q('.cam'); }
+    this.setMood('neutral'); this.blinkAt = performance.now()+1500;
+    if (!this._loop){ this._loop = true; requestAnimationFrame(t=>this.tick(t)); }
+  },
+  setMood(m){ this.mood = MOODS[m]? m : 'neutral'; if (this.C && this.C.video) this.pickClip(); },
+  setMode(m){ this.mode = m; if (this.C && this.C.video) this.pickClip(); },
+  // ---- 영상 캐릭터 ----
+  mountVideo(){
+    const M = MEDIA[this.C.video] || {};
+    const vs = [...this.el.querySelectorAll('video.clip')];
+    const V = this.vid = { el:this.el, cam:this.el.querySelector('.cam'), idle:vs[0], talk:vs[1], canvas:this.el.querySelector('canvas.lipgl'),
+      showing:null, gl:null, glFailed:false, drawn:false, idx:0, newFrame:false, lastCT:-1, shift:0, vel:0, lastT:0 };
+    vs.forEach(v=>{ v.style.opacity = 0; });
+    if (M.clips){
+      // 맨 아래: 입을 다문 채 숨 쉬듯 움직이는 듣는 영상(계속 반복), 그 위: 대사 영상 두 자리
+      const idle = document.createElement('video');
+      idle.className = 'idleloop'; idle.muted = true; idle.loop = true; idle.playsInline = true; idle.setAttribute('playsinline',''); idle.preload = 'auto';
+      idle.src = M.idleLoop; V.cam.insertBefore(idle, vs[0]); V.idleEl = idle;
+      idle.style.opacity = 0; idle.addEventListener('playing', ()=>{ idle.style.opacity = 1; }, {once:true});
+      const ip = idle.play(); if (ip && ip.catch) ip.catch(()=>{});
+      vs.forEach(v=>{ v.loop = false; v.preload = 'auto'; v.style.opacity = 0; });
+      vs[0].setAttribute('src', Clips.url(1));
+      V.slots = vs; Clips.preload(); this.mode = 'idle'; return;
+    }
+    if (M.idle){
+      V.idle.setAttribute('src', M.idle); V.idle.loop = true;
+      const p = V.idle.play(); if (p && p.then) p.then(()=>{ if (this.mode!=='speaking') this.showLayer('idle'); }).catch(()=>{});
+    }
+    if (M.talk){
+      V.talk.setAttribute('src', M.talk); V.talk.loop = true; V.talk.preload = 'auto';
+      try{ V.talk.load(); }catch(e){}
+      // 화면에 실제로 표시되는 프레임 번호를 정확히 받기
+      if (M.lips && V.talk.requestVideoFrameCallback){
+        const cb = (now, meta)=>{ if (!V.el.isConnected) return; V.idx = Math.round(meta.mediaTime*M.lips.fps) % M.lips.n; V.newFrame = true; V.lastVFC = performance.now(); V.talk.requestVideoFrameCallback(cb); };
+        V.talk.requestVideoFrameCallback(cb);
+      }
+    }
+    this.mode = 'idle';
+  },
+  showLayer(which){
+    const V = this.vid; if (!V || V.showing===which) return; V.showing = which;
+    V.idle.style.opacity = which==='idle' ? 1 : 0; V.talk.style.opacity = which==='talk' ? 1 : 0;
+    if (V.canvas) V.canvas.style.opacity = (which==='talk' && V.drawn) ? 1 : 0;
+  },
+  pickClip(){
+    const V = this.vid; if (!V || !V.el.isConnected) return;
+    if ((MEDIA[this.C.video]||{}).clips) return;   // 대사 영상 모드: Clips가 직접 틀어 줌
+    if (this.mode==='speaking' && V.talk.getAttribute('src')){
+      V.shift = 0; V.vel = 0; V.lastT = 0;
+      try{ V.talk.currentTime = 0; const p = V.talk.play(); if (p && p.then) p.then(()=>{ if (this.mode==='speaking') this.showLayer('talk'); }).catch(()=>{}); }catch(e){}
+      if (V.talk.readyState >= 2) this.showLayer('talk');
+    } else if (V.idle.getAttribute('src')){
+      try{ const p = V.idle.play(); if (p && p.catch) p.catch(()=>{}); }catch(e){}
+      if (V.idle.readyState >= 2) this.showLayer('idle');
+    }
+  },
+  // 목소리(Lip)의 음절에 맞춰 입을 얼마나 벌릴지 정하고, 재생 중인 영상의 입을 부드럽게 여닫음
+  tickLip(t){
+    const V = this.vid, M = MEDIA[this.C.video] || {}, D = M.lips;
+    if (!D || V.glFailed || !V.canvas || V.talk.readyState < 2) return;
+    if (!V.gl){ V.gl = LipGL.make(V.canvas); if (!V.gl){ V.glFailed = true; return; } }
+    if (!V.talk.requestVideoFrameCallback || !V.lastVFC || performance.now() - V.lastVFC > 250){
+      const ct = V.talk.currentTime; if (ct !== V.lastCT){ V.lastCT = ct; V.idx = Math.round(ct*D.fps) % D.n; V.newFrame = true; }
+    }
+    const i = V.idx;
+    // 목표 입 벌림
+    let open = 0;
+    if (this.mode==='speaking'){
+      const s = Lip.current(t), base = LIP_OPEN[s.shape] || 0;
+      open = base ? base*Math.min(1.15, s.k) : 0;
+      open *= (MOODS[this.mood]||{}).open || 1;
+    }
+    const HMAX = 30, h = Math.max(0, D.yl[i] - D.yu[i]), want = open*HMAX;
+    let tgt = h > want ? (h - want + 2) : -Math.min(want - h, 3);
+    tgt = Math.min(tgt, h + 2);
+    // 부드러운 스프링 (뚝뚝 끊기지 않게)
+    const dt = V.lastT ? Math.min(0.05, (t - V.lastT)/1000) : 0.016; V.lastT = t;
+    const om = 40, n = 4;
+    for (let k = 0; k < n; k++){ const acc = om*om*(tgt - V.shift) - 2*om*V.vel; V.vel += acc*dt/n; V.shift += V.vel*dt/n; }
+    try{
+      if (V.newFrame || !V.drawn){ V.gl.upload(V.talk); V.newFrame = false; }
+      V.gl.draw({ mx:D.mx[i], yu:D.yu[i]-2, yl:D.yl[i], hw:D.hw[i], t:D.t[i], k:D.k[i], shift:V.shift });
+      if (!V.drawn){ V.drawn = true; if (V.showing==='talk') V.canvas.style.opacity = 1; }
+    }catch(e){ console.warn('LipGL draw', e); V.glFailed = true; V.canvas.style.opacity = 0; }
+  },
+  mouthD(w,h,s,cy){
+    cy = cy || (this.C && this.C.mouthY) || 218;
+    const cx=240, a=w/2, yl=cy-s;
+    const up = cy - h*0.42 + s*0.25, lo = cy + h*1.15 + s*0.9;
+    return {d:`M${cx-a} ${yl} Q${cx} ${up} ${cx+a} ${yl} Q${cx} ${lo} ${cx-a} ${yl} Z`, up, lo};
+  },
+  // 실사 캐릭터: 실제 표정 사진에서 떼어 낸 입·눈 조각을 소리에 맞춰 바꿔 끼움
+  tickKit(t, C, M){
+    const Ly = this.layers; if (!Ly) return;
+    const want = {};
+    if (this.mode==='speaking'){
+      const s = Lip.current(t); let v = s.shape;
+      if (s.k < 0.55) v = ({A:'E', E:'I', O:'U', I:null, U:null})[v] ?? null;   // 음절 끝: 입을 조금 닫음
+      if (v==='A' && s.k*(M.open||1) < 0.85) v = 'E';
+      if (v && v!=='rest' && v!=='closed'){
+        const angry = this.mood==='annoyed';
+        const key = (angry && Ly['x'+v]) ? 'x'+v : 'm'+v;
+        if (Ly[key]) want[key] = 1;
+      }
+    }
+    // 눈 깜빡임: 빠르게 감았다가 뜸
+    if (t > this.blinkAt){ this.blinkT = t; this.blinkAt = t + 2300 + Math.random()*3400; }
+    const bt = t - this.blinkT;
+    want.blink = bt < 0 ? 0 : bt < 45 ? bt/45 : bt < 115 ? 1 : bt < 175 ? 1-(bt-115)/60 : 0;
+    // 화났을 때 찌푸린 눈썹
+    want.brow = this.mood==='annoyed' ? 1 : 0;
+    for (const k in Ly){
+      const L = Ly[k], target = want[k]||0;
+      const rate = k==='blink' ? 1 : k==='brow' ? 0.08 : 0.6;
+      L.o += (target - L.o)*rate; if (L.o < 0.01) L.o = 0;
+      L.n.setAttribute('opacity', L.o.toFixed(3));
+    }
+    // 카메라: 숨쉬듯 아주 살짝 확대·이동 (배경과 인물이 함께 움직여 어긋나지 않음)
+    let sc = 1.03 + Math.sin(t/1700)*0.004, tx = 0, ty = 0;
+    if (this.mode==='speaking'){ tx = Math.sin(t/900)*1.6; ty = Math.sin(t/520)*0.9; sc += 0.006; }
+    else if (this.mode==='listening'){ ty = Math.max(0, Math.sin(t/380))*1.6; }
+    else if (this.mode==='thinking'){ tx = -2 + Math.sin(t/1100)*0.6; sc += 0.01; }
+    if (this.mood==='happy' && this.mode!=='speaking') ty += Math.sin(t/460)*0.8;
+    this.cam.setAttribute('transform', `translate(240 200) scale(${sc.toFixed(4)}) translate(${(-240+tx).toFixed(2)} ${(-200+ty).toFixed(2)})`);
+  },
+  // 이미지 캐릭터: 아래턱 영역을 내려 입을 벌리고, 눈꺼풀을 덮어 깜빡임
+  tickImg(t, C, M){
+    const P = this.parts;
+    let tgt = SHAPES.rest, k = 1;
+    if (this.mode==='speaking'){ const s = Lip.current(t); tgt = SHAPES[s.shape]||SHAPES.rest; k = s.k*(M.open||1); }
+    const dT = tgt.h*0.55*k, aT = C.mouth.half*Math.min(1.05, tgt.w/44);
+    this.cur.h += (dT-this.cur.h)*0.42; this.cur.w += (aT-this.cur.w)*0.42;
+    const d = this.cur.h, a = this.cur.w, y0 = C.mouth.y, cx = C.mouth.x;
+    if (d > 0.6){
+      const bot = y0 + d + 4;
+      const path = `M${cx-a} ${y0} Q${cx} ${y0-1.2} ${cx+a} ${y0} C${cx+a*0.55} ${bot+1} ${cx-a*0.55} ${bot+1} ${cx-a} ${y0} Z`;
+      P.mIn.setAttribute('d', path); P.mClip.setAttribute('d', path); P.mIn.style.display = '';
+      P.teeth.setAttribute('y', y0-1.2); P.teeth.setAttribute('height', Math.min(2.6, d*0.22));
+      P.tongue.setAttribute('cy', y0+d+4); P.tongue.setAttribute('rx', a*0.5); P.tongue.setAttribute('ry', d*0.35);
+    } else { P.mIn.style.display = 'none'; P.mClip.setAttribute('d',''); }
+    P.jaw.setAttribute('transform', `translate(0 ${(d*0.95).toFixed(2)})`);
+    // 깜빡임
+    if (t > this.blinkAt){ this.blinkT = t; this.blinkAt = t + 2400 + Math.random()*3200; }
+    const bp = (t - this.blinkT)/160; const c = bp<1 ? 1-Math.abs(1-2*bp) : 0;
+    C.eyes.forEach(([x,y],i)=>{
+      const lid = P.lids[i], lash = P.lashes[i];
+      if (c < 0.06){ lid.style.display='none'; lash.style.display='none'; return; }
+      const side = y-10+c*12, mid = y-10+c*22;
+      lid.setAttribute('d', `M${x-16} ${y-11} Q${x} ${y-15} ${x+16} ${y-11} L${x+16} ${side} Q${x} ${mid} ${x-16} ${side} Z`);
+      lash.setAttribute('d', `M${x-15} ${side} Q${x} ${mid} ${x+15} ${side}`);
+      lid.style.display=''; lash.style.display = c>0.45 ? '' : 'none';
+    });
+    // 몸 전체를 살짝 움직임
+    const mo = C.motion||1, [px,py] = C.pivot||[240,400];
+    let rot = 0, ty = 0;
+    if (this.mode==='speaking'){ rot = (Math.sin(t/620)*1.6 + Math.sin(t/233)*0.5)*mo; ty = Math.sin(t/410)*1.2*mo; }
+    else if (this.mode==='listening'){ ty = Math.max(0,Math.sin(t/330))*2.4; rot = Math.sin(t/1400)*0.5; }
+    else if (this.mode==='thinking'){ rot = -1.6 + Math.sin(t/900)*0.3; }
+    else { rot = Math.sin(t/2600)*0.5; }
+    if (this.mood==='happy' && this.mode!=='speaking') rot += Math.sin(t/500)*0.6;
+    P.head.setAttribute('transform', `rotate(${rot.toFixed(2)} ${px} ${py}) translate(0 ${ty.toFixed(2)})`);
+    P.body.setAttribute('transform', `translate(0 ${(Math.sin(t/1500)*1.1).toFixed(2)}) scale(1 ${(1+Math.sin(t/1500)*0.003).toFixed(4)})`);
+  },
+  tick(t){
+    requestAnimationFrame(tt=>this.tick(tt));
+    if (!this.el) return;
+    const P = this.parts, M = MOODS[this.mode==='thinking'?'thinking':this.mood];
+    // mouth target
+    const C = this.C || {};
+    if (C.video){
+      if (!this.vid || !this.vid.el.isConnected) return;
+      const MV = MEDIA[C.video] || {};
+      if (MV.lips && (this.vid.showing==='talk' || this.mode==='speaking')) this.tickLip(t);
+      if (!MV.clips){ // 보여 줄 영상이 준비되면 바로 전환 (이벤트를 놓쳐도 스스로 맞춤)
+        const V = this.vid, wantTalk = this.mode==='speaking' && V.talk.getAttribute('src');
+        if (wantTalk && V.showing!=='talk' && V.talk.readyState >= 2) this.showLayer('talk');
+        else if (!wantTalk && V.showing!=='idle' && V.idle.readyState >= 2) this.showLayer('idle');
+      }
+      let sc = 1.02 + Math.sin(t/1800)*0.004, tx = 0, ty = 0;
+      if (!MV.idle){ // 영상이 없을 때만 사진을 살짝 움직임
+        if (this.mode==='speaking'){ tx = Math.sin(t/1100)*0.25; ty = Math.sin(t/700)*0.18; }
+        else if (this.mode==='listening'){ ty = Math.max(0,Math.sin(t/420))*0.3; }
+      } else sc = 1;
+      this.vid.cam.style.transform = `scale(${sc.toFixed(4)}) translate(${tx.toFixed(2)}%, ${ty.toFixed(2)}%)`;
+      return;
+    }
+    if (C.kit){ this.tickKit(t, C, M); return; }
+    if (C.img){ this.tickImg(t, C, M); return; }
+    let tgt = SHAPES.rest, k = 1;
+    if (this.mode==='speaking'){ const s = Lip.current(t); tgt = SHAPES[s.shape]||SHAPES.rest; k = s.k * (M.open||1); }
+    else if (C.idleGrin && M.happy){ tgt = {w:40, h:9}; }          // 기쁠 때 활짝 웃는 입
+    else if (C.idleGrin && this.mood==='annoyed'){ tgt = {w:30, h:3}; }
+    const tw = tgt.w*(C.mouthW||1), th = tgt.h*k*(C.mouthH||1);
+    const f = 0.42;
+    this.cur.w += (tw-this.cur.w)*f; this.cur.h += (th-this.cur.h)*f;
+    const smileT = (this.mode==='speaking'? (M.speak??M.smile*0.5) : M.smile) * (C.mouthW||1);
+    this.smileCur += (smileT-this.smileCur)*0.12;
+    const {d,up,lo} = this.mouthD(this.cur.w, this.cur.h, this.smileCur);
+    P.mLine.setAttribute('d', d); P.mClip.setAttribute('d', d);
+    const open = this.cur.h > 1.4;
+    P.mIn.setAttribute('d', d); P.mIn.style.display = open? '' : 'none';
+    P.teeth.setAttribute('y', up-6); P.teeth.setAttribute('height', Math.max(0,(this.cur.h*0.32)+4));
+    P.tongue.setAttribute('cy', lo-2); P.tongue.setAttribute('rx', this.cur.w*0.28); P.tongue.setAttribute('ry', Math.max(0,this.cur.h*0.28));
+    // brows
+    const amp = C.browAmp || 1;
+    // 말할 때 입이 크게 벌어지면 눈썹도 함께 들썩임 (표정이 큰 캐릭터)
+    const bounce = (C.browBounce && this.mode==='speaking') ? -Math.min(6, this.cur.h*0.16) : 0;
+    ['bl','br'].forEach(side=>{ for(let i=0;i<2;i++){ const want = M[side][i]*amp + bounce; this.brow[side][i] += (want-this.brow[side][i])*0.18; } });
+    const bd = browD(C, this.brow.bl, this.brow.br);
+    P.bl.setAttribute('d', bd.l); P.br.setAttribute('d', bd.r);
+    // eyes / blink
+    if (t > this.blinkAt){ this.blinkT = t; this.blinkAt = t + 2200 + Math.random()*3200; }
+    const bp = (t - this.blinkT)/140; const sy = bp<1? Math.max(0.1, Math.abs(1-2*bp)) : 1;
+    const lookY = this.mode==='thinking'? -3 : 0, lookX = this.mode==='thinking'? 3 : 0;
+    P.eyes.forEach(e=>{
+      const cx=+e.dataset.cx, cy=+e.dataset.cy;
+      e.querySelector('.eye-open').setAttribute('transform', `translate(${cx+lookX} ${cy+lookY}) scale(1 ${sy}) translate(${-cx} ${-cy})`);
+      e.querySelector('.eye-open').style.display = M.happy? 'none':'';
+      e.querySelector('.eye-happy').style.display = M.happy? '':'none';
+    });
+    // head & body motion
+    let rot = 0, ty = 0;
+    if (this.mode==='speaking'){ rot = Math.sin(t/620)*1.6 + Math.sin(t/233)*0.5; ty = Math.sin(t/410)*1.2; }
+    else if (this.mode==='listening'){ ty = Math.max(0,Math.sin(t/330))*3.2; rot = Math.sin(t/1400)*0.8; }
+    else if (this.mode==='thinking'){ rot = -3.2 + Math.sin(t/900)*0.4; }
+    else { rot = Math.sin(t/2600)*0.7; }
+    P.head.setAttribute('transform', `rotate(${rot.toFixed(2)} 240 250) translate(0 ${ty.toFixed(2)})`);
+    P.body.setAttribute('transform', `translate(0 ${(Math.sin(t/1500)*1.3).toFixed(2)})`);
+  }
+};
+
+/* 입모양 싱크 엔진: 한글 음절 → 모음별 입모양, 양순음(ㅁㅂㅍ)은 입 닫기 */
+const Lip = {
+  seg:[], t0:0, total:0, active:false,
+  build(text, rate, estimateOnly){
+    const base = 150 / rate * (state.sylFactor||1);
+    const seg = []; let t = 0;
+    const push = (dur, shape, k, ci)=>{ seg.push({a:t, b:t+dur, shape, k, ci}); t += dur; };
+    for (let i=0;i<text.length;i++){
+      const ch = text[i], c = ch.charCodeAt(0);
+      if (c>=0xAC00 && c<=0xD7A3){
+        const n = c-0xAC00, cho = Math.floor(n/588), jung = Math.floor((n%588)/28), jong = n%28;
+        const vs = VOWEL_SHAPE[jung];
+        const bilabialStart = [6,7,8,17].includes(cho), bilabialEnd = [16,17,18,26].includes(jong);
+        const k = 0.75 + Math.random()*0.35;
+        if (bilabialStart) push(base*0.28,'closed',1,i);
+        push(base*(bilabialStart?0.52:0.72) + (jong?0:base*0.1), vs, k, i);
+        if (jong) push(base*0.2, bilabialEnd?'closed':vs, bilabialEnd?1:k*0.45, i);
+        else push(base*0.1, vs, k*0.6, i);
+      } else if (/[.?!…]/.test(ch)) push(base*2.2,'rest',1,i);
+      else if (/[,~]/.test(ch)) push(base*1.4,'rest',1,i);
+      else if (/\s/.test(ch)) push(base*0.25,'rest',1,i);
+      else if (/[0-9]/.test(ch)) { push(base*0.9,'E',1,i); push(base*0.9,'A',0.8,i); }
+      else if (/[A-Za-z]/.test(ch)) push(base*0.75,'E',0.9,i);
+    }
+    if (estimateOnly) return t;
+    this.seg = seg; this.total = t; return t;
+  },
+  start(){ this.t0 = performance.now(); this.active = true; },
+  sync(ci){ // TTS 단어 경계 이벤트로 재동기화
+    const s = this.seg.find(x=>x.ci>=ci); if (!s) return;
+    const now = performance.now(), want = now - s.a;
+    if (Math.abs(want - this.t0) > 90) this.t0 = want;
+  },
+  current(t){
+    if (!this.active) return {shape:'rest',k:1};
+    const e = t - this.t0;
+    if (e > this.total){ // 예상보다 말이 길어질 때: 가볍게 움직임 유지
+      return {shape: (Math.floor(e/140)%2)?'E':'I', k:0.5};
+    }
+    let lo=0, hi=this.seg.length-1;
+    while(lo<=hi){ const m=(lo+hi)>>1, s=this.seg[m]; if (e<s.a) hi=m-1; else if (e>=s.b) lo=m+1; else return s; }
+    return {shape:'rest',k:1};
+  },
+  stop(){ this.active = false; }
+};
+
+/* =========================================================
+   음성 합성 (TTS)
+   ========================================================= */
+const Voice = {
+  voices:[], enabled:true, subtitles:true, rate:1.0, choice:{},
+  init(){
+    if (!('speechSynthesis' in window)) { this.enabled = false; return; }
+    const load = ()=>{ this.voices = speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang)); };
+    load(); try{ speechSynthesis.onvoiceschanged = load; }catch(e){}
+  },
+  pick(listener){
+    if (this.choice[listener]) { const v = this.voices.find(x=>x.name===this.choice[listener]); if (v) return v; }
+    const L = LISTENERS[listener];
+    const male = /male(?!.*female)|InJoon|Hyunsu|BongJin|GookMin|남성|Minsu|Jun/i;
+    const female = /female|Heami|SunHi|Yuna|Sora|JiMin|Seoyeon|여성|Google 한국/i;
+    let v = L.voice==='male' ? this.voices.find(x=>male.test(x.name)) : this.voices.find(x=>female.test(x.name)&&!/InJoon/i.test(x.name));
+    return v || this.voices[0] || null;
+  },
+  token:0,
+  // 문장 단위로 나눠 말해서 문장마다 억양(음높이·빠르기)을 달리함
+  split(text){ return (text.match(/[^.?!…]+[.?!…]*\s*/g)||[text]).map(x=>x.trim()).filter(Boolean); },
+  prosody(listener, sentence, i, mood){
+    const L = LISTENERS[listener], P = L.prosody || {};
+    let pitch = L.pitch, rate = P.rate || 1, volume = 1;
+    if (P.vary) pitch += (i%2 ? -P.vary*0.6 : P.vary*0.4);           // 문장마다 높낮이 오르내림
+    if (/\?\s*$/.test(sentence)) pitch += P.question || 0.04;       // 물음표: 끝을 올림
+    if (/!\s*$/.test(sentence)) { pitch += P.exclaim || 0.03; volume = 1; }
+    const m = (P.mood||{})[mood]; if (m){ pitch += m.pitch||0; rate += m.rate||0; }
+    return { pitch:Math.max(0.5, Math.min(1.6, pitch)), rate, volume };
+  },
+  speak(text, listener, onDone){
+    const my = ++this.token; let finished = false; const timers = [];
+    const done = ()=>{ if (finished || my!==this.token) return; finished = true; timers.forEach(clearTimeout); Lip.stop(); Avatar.setMode('idle'); setStatus('idle'); onDone && onDone(); };
+    showSubtitle(text);
+    Avatar.setMode('speaking'); setStatus('speaking');
+    const P = LISTENERS[listener].prosody || {};
+    let faked = false;
+    const fake = ()=>{ if (my!==this.token || faked) return; faked = true; const est = Lip.build(text, this.rate*(P.rate||1)); Lip.start(); timers.push(setTimeout(done, est+200)); };
+    if (!this.enabled || !('speechSynthesis' in window)) { fake(); return; }
+    try{
+      speechSynthesis.cancel();
+      const v = this.pick(listener), mood = Avatar.mood, chunks = this.split(text);
+      const isMaleVoice = v && /male(?!.*female)|InJoon|Hyunsu/i.test(v.name);
+      let anyStarted = false;
+      chunks.forEach((c,i)=>{
+        const u = new SpeechSynthesisUtterance(c); u.lang = 'ko-KR'; if (v) u.voice = v;
+        const pr = this.prosody(listener, c, i, mood);
+        u.rate = Math.min(2, this.rate*pr.rate);
+        u.pitch = (LISTENERS[listener].voice==='male' && isMaleVoice) ? Math.max(0.6, pr.pitch + (1-LISTENERS[listener].pitch)) : pr.pitch;
+        u.volume = pr.volume;
+        let st = 0, est = 0;
+        u.onstart = ()=>{ if (my!==this.token) return; anyStarted = true; st = performance.now(); est = Lip.build(c, u.rate); Lip.start(); };
+        u.onboundary = e=>{ if (my===this.token && typeof e.charIndex==='number') Lip.sync(e.charIndex); };
+        u.onend = ()=>{
+          if (my!==this.token) return;
+          if (st){ const r = (performance.now()-st)/Math.max(300,est); state.sylFactor = Math.min(1.8, Math.max(0.6, (state.sylFactor||1)*(0.6+0.4*r))); }
+          Lip.stop();                                    // 문장 사이에서 입을 닫아 또렷하게 끊어 말함
+          if (i===chunks.length-1) done();
+        };
+        u.onerror = ()=>{ if (my!==this.token) return; if (!anyStarted) fake(); else if (i===chunks.length-1) done(); };
+        speechSynthesis.speak(u);
+      });
+      timers.push(setTimeout(()=>{ if (!anyStarted && my===this.token){ try{speechSynthesis.cancel();}catch(e){} fake(); } }, 2500));
+      const totalEst = Lip.build(text, this.rate, true);
+      timers.push(setTimeout(()=>{ if (!finished && my===this.token && !speechSynthesis.speaking) done(); }, totalEst*2.2+4000));
+      timers.push(setTimeout(()=>done(), totalEst*4+12000));
+    }catch(e){ fake(); }
+  },
+  stop(){ this.token++; try{ speechSynthesis.cancel(); }catch(e){} Lip.stop(); if (typeof Clips!=='undefined') Clips.stop(); Avatar.setMode('idle'); }
+};
+
+/* =========================================================
+   음성 인식 (STT)
+   ========================================================= */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+// 이 화면(Claude 안의 틀)에서 브라우저가 마이크를 허용하는지 미리 확인
+function micAllowedByFrame(){
+  try{
+    const pol = document.permissionsPolicy || document.featurePolicy;
+    if (pol && typeof pol.allowsFeature==='function') return pol.allowsFeature('microphone');
+  }catch(e){}
+  return true;
+}
+const Rec = {
+  r:null, on:false, base:'', blocked: !SR || !micAllowedByFrame(),
+  start(){
+    if (this.blocked) return false;
+    try{
+      const r = new SR(); this.r = r; r.lang='ko-KR'; r.interimResults=true; r.continuous=true;
+      this.base = $('#say').value ? $('#say').value.trim()+' ' : '';
+      r.onresult = e=>{
+        let fin='', intr='';
+        for (let i=0;i<e.results.length;i++){ const x=e.results[i]; (x.isFinal? (fin+=x[0].transcript) : (intr+=x[0].transcript)); }
+        $('#say').value = (this.base + fin + intr).replace(/\s+/g,' '); updateSend();
+      };
+      r.onerror = e=>{ if (!['no-speech','aborted'].includes(e.error)){ this.blocked = true; Mic.fallback(); } };
+      r.onend = ()=>{ this.on=false; Mic.recEnded(); };
+      r.start(); this.on = true; return true;
+    }catch(e){ this.blocked = true; return false; }
+  },
+  stopRec(){ try{ this.r && this.r.stop(); }catch(e){} }
+};
+/* 말하기 ↔ 완료 버튼 하나로 녹음 시작과 끝을 조절 */
+const Mic = {
+  active:false, mode:null, finishing:false, guard:null,
+  toggle(){
+    if (!state.started){ $('#playBtn').click(); return; }
+    if (state.busy || state.over) return;
+    this.active ? this.finish() : this.begin();
+  },
+  begin(){
+    Voice.stop(); $('#errBox').innerHTML = '';
+    $('#say').value = ''; updateSend();
+    this.active = true; this.finishing = false;
+    if (Rec.start()){ this.mode = 'sr'; showVoiceHelp(false); }
+    else this.fallback();
+    micUI(); Avatar.setMode('listening'); setStatus('listening');
+  },
+  // 마이크가 막혀 있으면 컴퓨터 자체의 받아쓰기 기능으로 말하게 함
+  fallback(){
+    this.mode = 'dictation'; showVoiceHelp(true);
+    if (this.active){ const t = $('#say'); t.focus(); }
+  },
+  recEnded(){
+    if (this.finishing){ this.finishing = false; clearTimeout(this.guard); this.submit(); return; }
+    // 말을 잠깐 쉬어서 인식이 저절로 끝난 경우: 완료를 누를 때까지 계속 듣기
+    if (this.active && this.mode==='sr' && !Rec.blocked){ setTimeout(()=>{ if (this.active && !Rec.on && !Rec.start()) this.fallback(); }, 150); }
+  },
+  finish(){
+    this.active = false; micUI();
+    if (this.mode==='sr' && Rec.on){
+      this.finishing = true; Rec.stopRec();
+      this.guard = setTimeout(()=>{ if (this.finishing){ this.finishing = false; this.submit(); } }, 1500);
+    } else this.submit();
+  },
+  submit(){
+    if (!state.busy && !state.over && Avatar.mode==='listening'){ Avatar.setMode('idle'); setStatus('idle'); }
+    if ($('#say').value.trim()) send();
+    else $('#errBox').innerHTML = `<div class="err">말한 내용이 글자로 바뀌지 않았어요. <b>말하기</b>를 다시 누르고 말해 주세요.</div>`;
+  },
+  reset(){ this.active = false; this.finishing = false; clearTimeout(this.guard); if (Rec.on) Rec.stopRec(); micUI(); }
+};
+function micUI(){
+  const b = $('#micBtn'); if (!b) return;
+  b.classList.toggle('rec', Mic.active);
+  $('#micLabel').textContent = Mic.active ? '완료' : '말하기';
+  b.title = Mic.active ? '말을 다 했으면 눌러서 보내기' : '눌러서 말하기';
+}
+function showVoiceHelp(strong){
+  const os = navigator.userAgent;
+  const tip = /iPhone|iPad|Android/i.test(os) ? '키보드의 <b>🎤 마이크 버튼</b>을 누르고 말하세요.'
+    : /Mac/i.test(os) ? '<b>fn 키를 두 번</b> 눌러 받아쓰기를 켜고 말하세요.'
+    : /CrOS/i.test(os) ? '<b>검색 + D</b>를 눌러 음성 입력을 켜고 말하세요.'
+    : '<b>⊞ Windows 키 + H</b>를 눌러 음성 입력을 켜고 말하세요.';
+  const h = $('#voiceHelp');
+  h.classList.toggle('strong', !!strong);
+  h.innerHTML = strong
+    ? `🎙️ 이 화면에서는 브라우저가 마이크를 직접 쓸 수 없어서, 컴퓨터의 받아쓰기 기능으로 말해요. <b>말하기</b>를 누른 다음 ${tip} 다 말했으면 <b>완료</b>를 누르세요.`
+    : '🎙️ 듣고 있어요. 다 말했으면 <b>완료</b>를 누르세요.';
+}
+
+/* =========================================================
+   상태 & 화면
+   ========================================================= */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const state = { scenario:null, listener:null, item:ITEMS[0], pet:PETS[0], level:'normal', name:'', turn:0, history:[], evals:[],
+  got:{}, tried:{}, concerns:{}, booth:false, hints:0, over:false, busy:false, sylFactor:1, lastLine:'', started:false };
+
+function need(){ return LV().need; }
+function progress(){
+  const g = state.got;
+  const arg = ARG.filter(t=>g[t]);
+  const rat = RATIONAL.filter(t=>g[t]);
+  const cDone = Object.keys(state.concerns).length;
+  const c = {
+    arg: arg.length>0, rat: rat.length>=2, emo: !!g['감성'], eth: !!g['인성'],
+    concerns: cDone>=need(), booth: state.scenario!=='booth' || state.booth,
+    argList:arg, ratList:rat, cDone
+  };
+  c.ratAny = rat.length>0;
+  c.kinds = [c.ratAny, c.emo, c.eth].filter(Boolean).length;
+  if (state.level==='easy') c.win = c.kinds>=2 && c.concerns && c.booth;
+  else if (state.level==='normal') c.win = c.ratAny && c.emo && c.eth && c.concerns && c.booth;
+  else c.win = c.arg && c.rat && c.emo && c.eth && c.concerns && c.booth;
+  return c;
+}
+// 난이도별 성공 조건 목록
+function conditions(p){
+  const g = state.got, n = need();
+  const chip = (t,on)=>`<span class="mchip ${on?'y':''}">${t}</span>`;
+  const con = {k:'con', ok:p.concerns, t:`걱정 해결 (${Math.min(p.cDone,n)}/${n})`, d:`<ul class="concern-list">${state.concernList.map(c=>`<li class="${state.concerns[c.id]?'y':'n'}">${c.short}: ${esc(c.text)}</li>`).join('')}</ul>`};
+  const emo = {k:'emo', ok:p.emo, t:'감성적 전략', d:'상대의 감정·마음에 호소하기'};
+  const eth = {k:'eth', ok:p.eth, t:'인성적 전략', d:'나의 경험·전문성·품성·성실한 태도로 믿음 주기. 품성과 태도는 구체적인 행동으로 보여 주기'};
+  let L;
+  if (state.level==='easy') L = [
+    {k:'kinds', ok:p.kinds>=2, t:`설득 전략 2가지 이상 (${Math.min(p.kinds,2)}/2)`, d:`<div class="minis">${chip('이성적',p.ratAny)}${chip('감성적',p.emo)}${chip('인성적',p.eth)}</div>`}, con];
+  else if (state.level==='normal') L = [
+    {k:'rat1', ok:p.ratAny, t:'이성적 전략', d:`<div class="minis">${RATIONAL.map(t=>chip(t,!!g[t])).join('')}</div>`}, emo, eth, con];
+  else L = [
+    {k:'arg', ok:p.arg, t:'논증 1개 이상', d:`<div class="minis">${ARG.map(t=>chip(t,!!g[t])).join('')}</div>`},
+    {k:'rat', ok:p.rat, t:`이성적 전략 2가지 (${Math.min(2,p.ratList.length)}/2)`, d:`<div class="minis">${['통계·자료','전문가 의견','사실·사례'].map(t=>chip(t,!!g[t])).join('')}<span class="mchip" style="border-style:dashed">+ 논증</span></div>`},
+    emo, eth, con];
+  if (state.scenario==='booth') L.push({k:'booth', ok:state.booth, t:'부스 계획 구체적으로 말하기', d:'무엇을 하는 부스인지, 어떻게 운영할지'});
+  return L;
+}
+
+/* ---------- setup UI ---------- */
+function renderSetup(){
+  $('#scenarioCards').innerHTML = Object.entries(SCENARIOS).map(([k,s])=>`
+    <button class="card ${state.scenario===k?'on':''}" data-sc="${k}"><span class="emoji">${s.emoji}</span><b>${s.title}</b><small>${s.desc}</small></button>`).join('');
+  document.querySelectorAll('[data-sc]').forEach(b=>b.onclick=()=>{
+    state.scenario=b.dataset.sc; const L = SCENARIOS[state.scenario].listeners;
+    if (!L.includes(state.listener)) state.listener = L.length===1? L[0] : null;
+    renderSetup();
+  });
+  const sc = state.scenario && SCENARIOS[state.scenario];
+  $('#itemRow').classList.toggle('hidden', state.scenario!=='item');
+  $('#petRow').classList.toggle('hidden', state.scenario!=='pet');
+  $('#petChips').innerHTML = PETS.map(i=>`<button class="chip ${state.pet===i?'on':''}" data-pet="${i}">${i==='강아지'?'🐶 ':'🐱 '}${i}</button>`).join('');
+  document.querySelectorAll('[data-pet]').forEach(b=>b.onclick=()=>{ state.pet=b.dataset.pet; renderSetup(); });
+  const custom = !ITEMS.includes(state.item);
+  $('#itemChips').innerHTML = ITEMS.map(i=>`<button class="chip ${state.item===i?'on':''}" data-item="${i}">${i}</button>`).join('')
+    + `<span class="chip ${custom?'on':''}">직접 입력: <input id="customItem" maxlength="20" placeholder="예: 무선 이어폰" value="${custom?esc(state.item):''}"></span>`;
+  document.querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>{ state.item=b.dataset.item; renderSetup(); });
+  const ci = $('#customItem'); if (ci){ ci.oninput=()=>{ state.item = ci.value.trim() || ITEMS[0]; updateGoal(); document.querySelectorAll('[data-item]').forEach(b=>b.classList.toggle('on', b.dataset.item===state.item)); ci.parentElement.classList.toggle('on', !!ci.value.trim()); }; }
+  $('#listenerRow').classList.toggle('hidden', !sc);
+  if (sc){
+    $('#listenerPick').innerHTML = sc.listeners.map(l=>`<button class="lp ${state.listener===l?'on':''}" data-l="${l}"><span class="mini">${avatarSVG(l)}</span><span>${LISTENERS[l].name}</span></button>`).join('');
+    document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{ state.listener=b.dataset.l; renderSetup(); });
+    // mini 아바타 표정 정적 세팅
+    document.querySelectorAll('.lp').forEach(b=>staticFace(b.querySelector('svg'), b.dataset.l));
+  }
+  updateGoal();
+}
+function staticFace(svg, kind){
+  const C = CHAR[kind] || {};
+  if (C.img || C.kit || C.video) return;
+  const m = Avatar.mouthD(34*(C.mouthW||1), 0, 4*(C.mouthW||1), C.mouthY||218);
+  svg.querySelector('.mouth-line').setAttribute('d', m.d); svg.querySelector('.mouth-in').style.display='none';
+  const b = browD(C, [-2,-2], [-2,-2]);
+  svg.querySelector('.brow-l').setAttribute('d', b.l); svg.querySelector('.brow-r').setAttribute('d', b.r);
+}
+function updateGoal(){
+  const ok = state.scenario && state.listener && (state.scenario!=='item' || state.item);
+  $('#startBtn').disabled = !ok;
+  $('#startNote').textContent = ok ? `${LISTENERS[state.listener].name}${josa(LISTENERS[state.listener].name,'과','와')} 대화해요. 말할 기회는 ${maxTurns()}번, 제한 시간 7분 30초!` : '상황과 청자를 골라 주세요.';
+  const lv = state.level;
+  const items = lv==='easy' ? [
+      '이성적·감성적·인성적 설득 전략 중 <b>2가지 이상</b> 사용',
+      '상대의 걱정 3가지 중 <b>1가지 이상</b> 해결']
+    : lv==='normal' ? [
+      '<b>이성적</b> 설득 전략 사용 (논증, 통계·자료, 전문가 의견, 사실·사례 중 아무거나)',
+      '<b>감성적</b> 설득 전략 사용',
+      '<b>인성적</b> 설득 전략 사용',
+      '상대의 걱정 3가지 중 <b>2가지 이상</b> 해결']
+    : [
+      '<b>논증</b>(귀납·연역·유추) 1개 이상 사용',
+      '서로 다른 <b>이성적 설득 전략 2가지</b> 사용 (논증 포함; 통계·자료, 전문가 의견, 사실·사례도 이성적 전략)',
+      '<b>감성적 설득 전략</b> 1가지 사용',
+      '<b>인성적 설득 전략</b> 1가지 사용',
+      '상대의 걱정 <b>3가지 모두</b> 해결'];
+  if (state.scenario==='booth') items.push('어떤 부스를 어떻게 운영할지 <b>구체적인 계획</b> 말하기');
+  const nums = '①②③④⑤⑥⑦';
+  $('#goalBox').innerHTML = `<b>성공 조건 (${LV().name})</b> — 아래를 모두 채우면 상대가 설득돼요. 말할 기회 ${maxTurns()}번, 제한 시간 <b>7분 30초</b>.`
+    + `<div style="margin-top:6px;line-height:1.9">${items.map((t,k)=>`${nums[k]} ${t}`).join('<br>')}</div>`;
+}
+document.querySelectorAll('.level').forEach(b=>b.onclick=()=>{
+  state.level=b.dataset.level; document.querySelectorAll('.level').forEach(x=>x.classList.toggle('on',x===b)); updateGoal();
+});
+$('#startBtn').onclick = startGame;
+
+/* ---------- talk ---------- */
+function startGame(){
+  const sc = SCENARIOS[state.scenario];
+  Object.assign(state,{ lastClips:null, lastAsk:null, timedOut:false, name:$('#nameIn').value.trim(), turn:0, history:[], evals:[], got:{}, tried:{}, concerns:{}, booth:false, hints:0, over:false, busy:false, started:false });
+  state.concernList = sc.concerns(state);
+  $('#setup').classList.add('hidden'); $('#result').classList.add('hidden'); $('#talk').classList.remove('hidden');
+  $('#talkTitle').textContent = sc.emoji+' '+sc.title + (state.scenario==='item'? ` · ${state.item}`: state.scenario==='pet'? ` · ${state.pet}`:'');
+  $('#levelBadge').className = 'badge '+state.level; $('#levelBadge').textContent = LV().name;
+  $('#whoTag').textContent = LISTENERS[state.listener].name;
+  Avatar.mount($('#avatarHost'), state.listener); Avatar.setMood('doubtful');
+  $('#playOver').classList.remove('hidden'); $('#subtitle').innerHTML=''; $('#replayBtn').classList.add('hidden');
+  $('#feedback').innerHTML = '<div class="empty">말을 하면 선생님이 잘한 점과 보완할 점을 알려 줄 거예요.</div>'; $('#fbTurn').textContent='';
+  $('#errBox').innerHTML=''; $('#hintBox').innerHTML=''; $('#say').value=''; $('#voiceHelp').innerHTML='';
+  Mic.reset(); if (Rec.blocked) showVoiceHelp(true);
+  stopTimer(); $('#timer').textContent = '⏱ 7:30'; $('#timer').classList.remove('low');
+  renderTurns(); renderChecklist(); updateSend();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+/* ---------- 제한 시간 (7분 30초) ---------- */
+let timerId = null;
+function fmtTime(sec){ sec = Math.max(0, Math.ceil(sec)); return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`; }
+function startTimer(){
+  stopTimer(); state.deadline = Date.now() + TIME_LIMIT*1000;
+  const tick = ()=>{
+    const left = (state.deadline - Date.now())/1000;
+    $('#timer').textContent = '⏱ ' + fmtTime(left);
+    $('#timer').classList.toggle('low', left <= 60);
+    if (left <= 0) timeUp();
+  };
+  tick(); timerId = setInterval(tick, 250);
+}
+function stopTimer(){ if (timerId){ clearInterval(timerId); timerId = null; } }
+function timeUp(){
+  stopTimer(); if (state.over) return;
+  state.over = true; state.timedOut = true; state.busy = false;
+  Mic.reset(); Voice.stop(); updateSend();
+  $('#errBox').innerHTML = ''; $('#hintBox').innerHTML = '';
+  const line = END_LINES[state.scenario];
+  Avatar.setMood('neutral');
+  state.history.push({role:'listener', text:line, turn:state.turn});
+  if (Clips.on()){ Clips.play([3], ()=>setTimeout(()=>showResult('timeout'), 900)); return; }
+  sayLine(line, ()=>setTimeout(()=>showResult('timeout'), 900));
+}
+$('#playBtn').onclick = ()=>{
+  $('#playOver').classList.add('hidden'); state.started = true; startTimer();
+  if (Clips.on()){ state.history.push({role:'listener', text:Clips.line(1), turn:0}); Clips.play([1]); return; }
+  const line = SCENARIOS[state.scenario].opening(state);
+  state.history.push({role:'listener', text:line, turn:0});
+  sayLine(line);
+};
+function sayLine(text, after){
+  state.lastLine = text; $('#replayBtn').classList.add('hidden');
+  Voice.speak(text, state.listener, ()=>{ $('#replayBtn').classList.remove('hidden'); after && after(); });
+}
+$('#replayBtn').onclick = ()=>{ if (Clips.on() && state.lastClips){ Clips.play(state.lastClips.slice()); return; } if (state.lastLine) sayLine(state.lastLine); };
+function showSubtitle(t){ $('#subtitle').innerHTML = Voice.subtitles? `<span>${esc(t)}</span>` : ''; }
+function setStatus(m){
+  const map = {idle:'대기 중', speaking:`${LISTENERS[state.listener]?.name||''} 말하는 중`, listening:'듣고 있어요', thinking:'생각하는 중…'};
+  $('#status').className = 'status '+m; $('#statusText').textContent = map[m]||'';
+}
+function renderTurns(){
+  $('#turnLeft').textContent = maxTurns() - state.turn;
+  $('#dots').innerHTML = Array.from({length:maxTurns()},(_,i)=>`<i class="${i<state.turn?'used':''}"></i>`).join('');
+}
+let prevDone = {};
+function renderChecklist(){
+  const p = progress();
+  const items = conditions(p);
+  $('#checklist').innerHTML = items.map(i=>`<li class="${i.ok?'ok':''} ${i.ok&&!prevDone[i.k]&&state.turn>0?'flash':''}"><span class="box"></span><div><div class="t">${i.t}</div><div class="d">${i.d}</div></div></li>`).join('');
+  items.forEach(i=>prevDone[i.k]=i.ok);
+  const hmax = LV().hintMax, left = hmax ? Math.max(0, hmax - state.hints) : null;
+  $('#hintWrap').innerHTML = !LV().hints ? `<span class="fbmeta">힌트 없음</span>`
+    : left===0 ? `<span class="fbmeta">힌트를 다 썼어요 (${hmax}/${hmax})</span>`
+    : `<button class="iconbtn" id="hintBtn" style="font-size:.85rem">💡 힌트 보기${hmax?` (남은 ${left}번)`:''}</button>`;
+  const hb = $('#hintBtn'); if (hb) hb.onclick = showHint;
+}
+function showHint(){
+  const hmax = LV().hintMax;
+  if (hmax && state.hints >= hmax) return;
+  state.hints++; renderChecklist();
+  const p = progress(), ex = EXAMPLES[state.scenario], L = LISTENERS[state.listener].name; const tips = [];
+  const hard = state.level==='hard', needMore = state.level==='easy' ? p.kinds<2 : true;
+  if (needMore && (hard ? !p.arg : !p.ratAny)){
+    const t = ['귀납','연역','유추'][state.hints%3];
+    const how = {귀납:'비슷한 사례를 두 개 이상 모아서 일반적인 결론을 이끌어 내 보세요.', 연역:'"일반적인 사실 → 이번 경우 → 그러므로 결론" 순서로 말해 보세요. 3단 논법의 구조는 <b>A는 B다(대전제). C는 A다(소전제). 그러므로 C는 B다(결론).</b>예요.<em>구조 예) "사람은 모두 죽는다. 소크라테스는 사람이다. 그러므로 소크라테스는 죽는다."</em>', 유추:'비슷한 점이 있는 다른 대상에 빗대어 말해 보세요.'}[t];
+    tips.push(`<b>${hard?'논증':'이성적 전략'}(${t})</b> ${how}${hard?'':' 통계, 전문가 의견, 사실·사례를 근거로 들어도 돼요. 사실·사례는 "너무 낡았어요" 같은 내 느낌이 아니라 누구나 확인할 수 있는 구체적인 사실이어야 해요(예: 산 지 몇 년, 어떤 기능이 안 되는지).'}<em>예) ${ex[t]}</em>`);
+  }
+  if (hard && p.arg && !p.rat) tips.push(`<b>이성적 전략 하나 더</b> 다른 종류의 논증을 쓰거나, 숫자·조사 결과(통계), 전문가나 기관의 말을 근거로 들어 보세요.<em>예) "○○ 조사에 따르면 ~한 학생이 ~%래요."</em>`);
+  if (needMore && !p.emo) tips.push(`<b>감성적 전략</b> ${L}의 마음(기쁨, 뿌듯함, 공감)을 움직일 이야기를 해 보세요. 떼쓰기는 안 돼요!<em>예) ${ex['감성']}</em>`);
+  if (needMore && !p.eth) tips.push(`<b>인성적 전략</b> 내가 믿을 만한 사람이라는 걸 보여 주세요. 주제와 관련된 나의 <b>경험</b>, 자료를 직접 찾아 읽고 출처를 밝힌 <b>전문성</b>, 그리고 <b>품성과 성실한 태도</b>가 있어요. 품성과 태도는 "저 성실해요"처럼 말로만 하면 인정되지 않아요. 지켜 온 약속이나 꾸준히 해 온 일 같은 구체적인 행동으로 보여 주세요.<em>예) ${ex['인성']}</em><em>예) "○○ 기관의 ○○년 조사 자료를 직접 찾아 읽어 봤는데요, ~라고 해요."</em>`);
+  const left = state.concernList.filter(c=>!state.concerns[c.id]);
+  if (!p.concerns && left.length) tips.push(`<b>걱정 해결: ${left[0].short}</b> "${esc(left[0].text)}" 이 걱정을 덜어 줄 구체적인 방법이나 약속을 말해 보세요. 약속이라면 <b>어떻게</b>(방법, 시간, 횟수) 해서 <b>얼마나</b>(목표 수치, 기한) 이룰지까지 말해야 믿어 줘요.<em>예) "성적 올릴게요" → "매일 저녁 2시간씩 문제집을 풀어서 다음 시험에 수학 점수를 10점 올릴게요."</em>`);
+  if (state.scenario==='booth' && !state.booth) tips.push(`<b>부스 계획</b> 무슨 부스인지(예: 과학 실험 체험), 어디서 몇 명이 어떻게 운영할지 말해 보세요.`);
+  // 예시 문장은 쉬움 난이도에서만 보여 줌
+  const shown = tips.slice(0,2).map(t=> state.level==='easy' ? t : t.replace(/<em>[\s\S]*?<\/em>/g,''));
+  $('#hintBox').innerHTML = `<div class="hint">${shown.map(t=>`<p>${t}</p>`).join('') || '<p>조건을 거의 다 채웠어요! 남은 걱정을 한 번 더 확인해 보세요.</p>'}</div>`;
+}
+
+function updateSend(){ $('#sendBtn').disabled = state.busy || state.over || !state.started || !$('#say').value.trim(); const m = $('#micBtn'); if (m) m.disabled = state.busy || state.over; }
+$('#say').addEventListener('input', updateSend);
+$('#say').addEventListener('keydown', e=>{ if (e.key==='Enter' && !e.shiftKey && !e.isComposing){ e.preventDefault(); if (!$('#sendBtn').disabled) send(); } });
+$('#say').addEventListener('focus', ()=>{ if (!Rec.on && !state.busy && Avatar.mode==='idle'){ Avatar.setMode('listening'); setStatus('listening'); } });
+$('#say').addEventListener('blur', ()=>{ if (!Rec.on && Avatar.mode==='listening'){ Avatar.setMode('idle'); setStatus('idle'); } });
+$('#micBtn').onclick = ()=>Mic.toggle();
+$('#sendBtn').onclick = send;
+
+/* ---------- AI 호출 ---------- */
+async function getSample(){
+  for (let i=0;i<40 && !(window.claude && window.claude.use);i++) await new Promise(r=>setTimeout(r,250));
+  if (!(window.claude && window.claude.use)) return null;
+  return await window.claude.use('sample');
+}
+function parseJSON(t){
+  if (t && typeof t==='object') return t;
+  const s = String(t||''); const a = s.indexOf('{'), b = s.lastIndexOf('}');
+  return JSON.parse(s.slice(a, b+1));
+}
+// onReply: 대답(reply)이 먼저 도착하면 평가가 끝나기 전에 바로 말하게 함
+async function askAI(prompt, onReply, onFront){
+  const sample = await getSample();
+  if (!sample) throw {code:'unavailable'};
+  const opts = {modelTier:'default', cache:false};
+  let r;
+  if (onReply || onFront){
+    let sent = false, fsent = false;
+    opts.onText = ({text})=>{
+      if (typeof text!=='string') return;
+      if (onFront && !fsent){ const f = text.match(/"front"\s*:\s*"([^"]+)"/); if (f){ fsent = true; onFront(f[1].trim()); } }
+      if (!onReply || sent) return;
+      const m = text.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+      if (m){ try{ const t = JSON.parse('"'+m[1]+'"'); if (t.trim()){ sent = true; onReply(t); } }catch(e){} }
+    };
+    const o = await sample(prompt, opts);
+    r = parseJSON(o.text);
+    if (r && r.value && !r.reply) r = r.value;
+    if (onFront && !fsent && r && r.front){ fsent = true; onFront(String(r.front).trim()); }
+    if (onReply && !sent && r && typeof r.reply==='string'){ sent = true; onReply(r.reply); }
+    return r;
+  }
+  if (typeof sample.json==='function'){
+    try{ r = await sample.json(prompt, opts); }catch(e){ if (e && e.code) throw e; r = null; }
+  }
+  if (!r){ const o = await sample(prompt, opts); r = parseJSON(o.text); }
+  if (typeof r==='string') r = parseJSON(r);
+  if (r && r.value && !r.reply) r = r.value;
+  return r;
+}
+
+function buildPrompt(utter){
+  const L = LISTENERS[state.listener], sc = SCENARIOS[state.scenario], hard = state.level==='hard', easy = state.level==='easy';
+  const p = progress();
+  const hist = state.history.map(h=> (h.role==='student'?'학생':L.name)+': '+h.text).join('\n');
+  const gotStr = Object.keys(state.got).join(', ') || '없음';
+  const conStr = state.concernList.filter(c=>state.concerns[c.id]).map(c=>c.id+'번').join(', ') || '없음';
+  const levelRule = hard ? `[난이도: 어려움] 형식을 갖추었는지 본다. 단, 중학교 3학년 수준을 고려해 너무 빡빡하게 판정하지 않는다. 형식의 핵심 요소가 드러나면 표현이 짧거나 어색하거나 말의 순서가 바뀌어도 인정한다. 인정할지 애매하면 인정하는 쪽으로 판정하고, 아쉬운 점은 피드백으로 알려 준다.
+- 귀납: 서로 다른 사례 2개 이상, 또는 수많은 사례를 모은 통계를 근거로 일반적 결론을 이끌어 내야 인정. 사례가 1개뿐이면 '사실·사례'로 분류한다.
+- 유추: 두 대상의 유사성을 밝히고, 그 유사성을 바탕으로 결론을 내야 인정.
+- 연역: 일반적 사실(대전제) → 개별 사실(소전제) → 결론의 3단 논법이 드러나야 인정. 자연스러운 말로 이어져 있어도 세 부분이 다 있으면 인정.
+- 모든 이성적 전략은 근거가 주장과 관련이 있어야 인정.
+- 감성: 떼쓰기("그냥 사 줘", "안 해 주면 울 거야"), 협박("안 해 주면 가출할 거야"), 무조건 조르기는 인정하지 않는다.
+- 인성: 아래 네 가지 중 하나가 구체적으로 드러나야 인정. (가) 경험: 주제와 관련된 화자 자신의 실제 경험이 언제, 무엇을 했는지 구체적으로 드러남 (나) 전문성: 주제에 대한 화자의 지식, 또는 자료를 직접 검토했음을 밝히고 출처(기관, 연도, 자료 이름 등)를 구체적으로 표기함. 막연히 "찾아봤는데"만으로는 인정하지 않는다. (다) 품성 (라) 성실하고 진지한 태도: 이 두 가지는 진정성을 확인한다. 그 품성·태도를 보여 주는 구체적인 과거 행동(언제, 무엇을, 얼마나 꾸준히)이 있고, 그것이 이번 설득 내용과 관련되어 믿음을 높여야 인정한다. "저는 성실해요", "진심이에요", "꼭 약속할게요"처럼 스스로 주장하거나 앞으로의 다짐만 하는 말은 인정하지 않는다.
+- 걱정 해결: 그 걱정에 대한 구체적이고 실현 가능한 해결책이나 근거를 제시해야 인정. 해결책이 앞으로의 약속("성적 올릴게요", "용돈 모을게요", "잘 돌볼게요" 등)이면 구체성을 확인한다: 무엇을 어떻게 할지(방법, 시간, 횟수)와 어느 만큼 이룰지(목표 수치나 기한)가 둘 다 드러나야 인정한다. 예) "성적 올릴게요"는 불인정, "매일 저녁 8~10시에 수학 문제집을 풀어서 다음 시험에 수학 점수를 10점 올릴게요"는 인정.${state.scenario==='booth'?'\n- 부스 계획(boothSpecified): 무엇을 하는 부스인지 + 운영 방법(장소, 인원·역할, 진행 방식 등) 중 2가지 이상이 드러나야 true.':''}`
+  : `[난이도: ${easy?'쉬움':'보통'}] 너그럽게 판정한다.${easy?' 처음 연습하는 학생이므로 특히 격려하는 방향으로 판정한다.':''}
+- 전략을 쓰려는 의도가 보이면 인정한다. 근거와 주장의 연결이 다소 느슨해도 인정한다.
+- 귀납: 사례를 들어 일반화하려는 의도가 보이면 인정(사례 1개여도 일반화 의도가 뚜렷하면 인정). 연역: 일반 원리에서 결론을 끌어내는 흐름이 보이면 일부가 생략돼도 인정. 유추: 비슷한 다른 대상에 빗대면 인정.
+- 감성: 감정에 호소하려는 의도가 보이면 인정. 단, 욕설이나 협박은 인정하지 않는다.
+- 인성: 경험, 전문성, 품성, 성실하고 진지한 태도 중 하나가 드러나면 인정하되, 지나치게 쉽게 인정하지 않는다. 경험은 주제와 관련된 실제 경험을 말하면 인정. 전문성을 빌려 오는 경우 자료의 출처(기관이나 자료 이름 등)를 하나라도 밝혀야 인정하고, "제가 찾아봤는데"만으로는 인정하지 않는다. 품성과 태도는 진정성을 확인한다: 짧더라도 그것을 보여 주는 구체적인 행동이나 사실(예: 지켜 온 약속, 꾸준히 해 온 일)이 한 가지는 있어야 인정한다. "저 성실해요", "진심이에요", "약속할게요"처럼 자기 칭찬이나 다짐만 있으면 인정하지 않는다.
+- 걱정 해결: 그 걱정에 대한 해결 방법이나 근거를 대략이라도 제시하면 인정. 단, 해결책이 앞으로의 약속이면 구체성을 확인한다: "성적 올릴게요", "열심히 할게요"처럼 막연한 다짐만 있으면 인정하지 않고, 어떻게 할지(방법, 시간, 횟수)나 얼마나 이룰지(목표 수치, 기한) 중 하나 이상이 구체적으로 드러나야 인정한다. 예) "매일 1시간씩 수학 공부해서 성적을 올릴게요"는 인정.${state.scenario==='booth'?'\n- 부스 계획(boothSpecified): 무엇을 하는 부스인지와 대략적인 운영 방법이 드러나면 true.':''}`;
+
+  return `너는 중학교 3학년 국어 '설득 전략' 말하기 수업에서 쓰는 역할극 AI다. 두 역할을 동시에 맡는다.
+(가) 청자: ${L.name}. ${L.persona}
+(나) 평가자: 국어 선생님으로서 학생의 이번 발언을 평가하고 피드백한다.
+
+[상황] ${sc.context(state)}
+[청자의 걱정 3가지]
+${state.concernList.map(c=>`${c.id}. ${c.short} - ${c.text}`).join('\n')}
+
+[설득 전략 분류]
+- 이성적 설득 전략: 논리적 근거로 이성에 호소. 세부 유형: 귀납, 연역, 유추(이 셋이 '논증'), 통계·자료(수치, 조사 결과), 전문가 의견(권위 있는 사람이나 기관의 말), 사실·사례(객관적 사실이나 사례 1개).
+- 사실·사례의 기준(모든 난이도 공통): 누구나 확인할 수 있는 객관적인 사실이나 사례여야 한다. 지극히 개인적이고 주관적인 판단은 사실·사례로 인정하지 않는다(valid:false). 예) "내 핸드폰이 너무 낡았어요", "공부하기 너무 불편해요", "친구들은 다 있어요"처럼 정도나 근거 없이 느낌·판단만 말한 것은 불인정. 학생 자신의 물건이나 상황에 관한 것이라도 확인할 수 있는 구체적인 사실(산 지 몇 년인지, 어떤 기능이 어떻게 안 되는지, 수치 등)이 드러나면 인정한다. 예) "4년 전에 산 폰인데 배터리가 2시간이면 꺼지고 수업 앱이 실행되지 않아요"는 인정. 불인정했으면 feedback.improve에서 어떤 구체적 사실을 덧붙이면 되는지 알려 준다.
+- 감성: 감성적 설득 전략. 청자의 감정(공감, 기쁨, 뿌듯함, 미안함, 그리움 등)에 호소.
+- 인성: 인성적 설득 전략. 말하는 사람의 공신력으로 믿음을 얻음. 화자의 경험(주제와 관련된 실제 경험), 전문성(지식, 또는 학생은 스스로 전문가가 될 수 없으므로 자료를 충분히 검토하고 출처를 정확히 밝혀 빌려 온 전문성), 품성, 성실하고 진지한 태도를 중점적으로 본다. 품성과 태도는 말로만 주장해서는 안 되고, 구체적인 행동 근거로 진정성이 확인되어야 한다.
+
+${levelRule}
+
+[지금까지 인정된 것] 전략: ${gotStr} / 해결된 걱정: ${conStr}${state.scenario==='booth'?` / 부스 계획 제시: ${state.booth?'완료':'아직'}`:''}
+[남은 말하기 기회] 이번 발언 포함 ${maxTurns() - state.turn + 1}번
+
+[지금까지의 대화]
+${hist}
+
+[이번 학생 발언]
+"${utter}"
+(음성 인식으로 받아 적은 말이라 띄어쓰기나 오타가 있을 수 있다. 뜻을 헤아려 판단하라.)
+
+[출력] 아래 형식의 JSON 객체 하나만 출력한다. 다른 글은 쓰지 않는다. 키는 반드시 아래 순서대로 쓴다(${Clips.on()?'front, reply 순서로 맨 처음':'reply가 맨 처음'}).
+{${Clips.on()?`
+ "front":"이성|감성|인성|부족|떼쓰기|해결1|해결2|해결3 중 하나 (가장 먼저 쓴다)",`:''}
+ "reply":"청자의 대답 (가장 먼저 쓴다)",
+ "mood":"doubtful|neutral|warm|happy|annoyed 중 하나",
+ "strategies":[{"type":"귀납|연역|유추|통계·자료|전문가 의견|사실·사례|감성|인성 중 하나","valid":true,"quote":"학생 발언에서 해당 부분을 짧게 그대로","reason":"인정하거나 인정하지 않은 이유 한 문장"}],
+ "concerns":[{"id":1,"resolved":true,"reason":"한 문장"}],
+ "boothSpecified":false,
+ "feedback":{"good":"잘한 점","improve":"부족한 점과 개선 방향"},
+ "acceptReply":"청자가 마침내 설득되어 허락하는 말"
+}
+
+${Clips.on()?`[청자의 첫 반응 front]
+이번 발언에 대한 청자의 첫 반응 하나를 고른다. 이번 발언으로 새로 해결된 걱정이 있으면 해결N(N은 걱정 번호). 그렇지 않고 이번에 인정되는 전략이 있으면 가장 두드러진 하나를 이성, 감성, 인성 중에서. 전략을 시도했지만 기준에 못 미치거나, 근거가 약하거나, 걱정에 대해 막연한 약속만 하거나, 같은 말을 되풀이하면 부족. 떼쓰기, 협박, 장난, 무례하거나 엉뚱한 말이면 떼쓰기.
+
+`:''}[평가 규칙]
+- strategies: 이번 발언에 실제로 있는 전략만 적는다. 발언의 한 부분은 가장 알맞은 한 가지 유형으로만 분류한다. 단, 출처를 밝힌 자료는 예외다: 자료의 내용(수치, 전문가의 말)을 근거로 쓴 것은 이성적 전략(통계·자료 또는 전문가 의견)으로, 출처를 밝히고 직접 검토했음을 드러낸 것은 인성으로, 두 항목을 따로 적어 함께 인정할 수 있다. 전략을 시도했지만 기준에 못 미치면 valid:false로 적고 이유를 쓴다. 전략이 없으면 빈 배열.
+- concerns: 이번 발언에서 다룬 걱정만 적는다. 이미 해결된 걱정은 적지 않는다. 막연한 약속이라 인정하지 않은 걱정은 resolved:false로 적고 reason에 무엇이 부족한지(방법, 목표 수치, 기한 등) 쓴다. 이때 feedback.improve에서 약속을 어떻게 구체적으로 바꾸면 되는지 알려 주고, 청자의 대답(reply)에서는 "어떻게 할 건데?", "얼마나?"처럼 구체적인 내용을 되묻는다.
+- feedback: 선생님 말투(해요체)로, 중3 눈높이에서 격려하며 쓴다. good은 이번 발언의 학생 표현을 짚어 구체적으로 1~2문장. 잘한 점이 거의 없으면 시도나 태도를 칭찬한다. improve는 부족한 점과 바로 써먹을 수 있는 개선 방법 1~2문장. ${hard?'형식 요건(사례 수, 3단 논법, 유사성, 근거의 연관성)에 맞지 않은 부분을 분명히 짚는다.':'아직 쓰지 않은 전략이나 남은 걱정을 넌지시 알려 준다.'}
+- mood: 이번 발언을 들은 청자의 기분.
+
+[청자 대답 규칙]
+- ${L.name}의 말투로, 소리 내어 읽을 1~3문장(120자 이내). 이모지, 괄호, 지문, 따옴표, 영어 약어는 쓰지 않는다.
+- 학생의 말에 구체적으로 반응한다. 설득력 있는 부분은 인정하고, 근거가 약하면 되묻는다.
+- 해결된 걱정은 다시 고집하지 않고, 아직 남은 걱정 하나를 자연스럽게 다시 꺼낸다.${state.scenario==='booth'?' 부스 계획이 아직 구체적이지 않으면 무엇을 어떻게 운영할지 묻는다.':''}
+- reply에서는 아직 최종 허락을 하지 않는다. 마음이 기울면 "조금 생각이 바뀌는구나" 정도까지는 말할 수 있다.
+- acceptReply는 결국 설득되어 허락하는 1~2문장. 이번 발언 내용을 반영하고, 가벼운 조건이나 약속을 덧붙여도 된다.
+- 학생 발언이 장난, 무관한 말, 무례한 말이면 캐릭터를 유지하며 대화로 돌아오게 하고 strategies는 빈 배열로 한다.`;
+}
+
+async function send(){
+  const utter = $('#say').value.trim(); if (!utter || state.busy || state.over) return;
+  Mic.reset(); Voice.stop();
+  state.busy = true; state.turn++; renderTurns(); updateSend();
+  state.history.push({role:'student', text:utter, turn:state.turn});
+  $('#say').value=''; $('#errBox').innerHTML=''; $('#hintBox').innerHTML='';
+  $('#subtitle').innerHTML = `<span style="background:rgba(47,125,109,.85)">나: ${esc(utter)}</span>`;
+  Avatar.setMode('thinking'); setStatus('thinking');
+  const clipMode = Clips.on();
+  let r, early = null, eclip = null;
+  // 대사 영상 모드: 첫 반응이 정해지는 즉시 그 영상을 틀어 줌
+  const onFront = f=>{
+    if (state.over || eclip) return; const id = FRONT_CLIP[f]; if (!id) return;
+    eclip = {id, done:false, after:null};
+    Clips.play([id], ()=>{ eclip.done = true; const g = eclip.after; eclip.after = null; g && g(); });
+  };
+  // 대답이 먼저 도착하면 평가를 기다리지 않고 바로 말함
+  const onReply = txt=>{
+    if (state.over) return;
+    early = {text:txt, done:false, after:null};
+    Avatar.setMood('neutral');
+    sayLine(txt, ()=>{ early.done = true; const f = early.after; early.after = null; f && f(); });
+  };
+  try{
+    // 규칙 기반 판정 (judge.js). 생각하는 듯 잠깐 뜸을 들인 뒤 대답
+    await new Promise(res=>setTimeout(res, 700 + Math.random()*500));
+    r = localJudge(utter);
+    if (!r || typeof r.reply!=='string') throw {code:'bad'};
+  }catch(e){
+    if (state.over) return;
+    if (early || eclip) Voice.stop();
+    state.turn--; state.history.pop(); state.busy=false; renderTurns();
+    $('#say').value = utter; updateSend(); Avatar.setMode('idle'); setStatus('idle'); $('#subtitle').innerHTML='';
+    const msg = e && e.code==='not_granted' ? 'AI 사용이 허용되지 않았어요. 허용 창에서 허용한 뒤 다시 보내 주세요.'
+      : e && e.code==='rate_limited' ? 'AI가 잠깐 바빠요. 30초쯤 뒤에 다시 보내 주세요. (기회는 줄지 않았어요)'
+      : e && e.code==='unavailable' ? '이 화면에서는 AI를 불러올 수 없어요. Claude에 로그인한 상태로 이 페이지를 열어 주세요.'
+      : '판정하는 중에 문제가 생겼어요. 다시 보내 주세요. (기회는 줄지 않았어요)'; console.error(e);
+    $('#errBox').innerHTML = `<div class="err">${msg}</div>`;
+    return;
+  }
+  if (state.over) return;   // 기다리는 동안 시간이 끝난 경우
+  // 평가 반영
+  const strategies = (Array.isArray(r.strategies)? r.strategies : []).filter(s=>s && ALL_TYPES.includes(s.type));
+  strategies.forEach(s=>{ if (s.valid){ if (!state.got[s.type]) state.got[s.type] = {turn:state.turn, quote:s.quote||''}; } else state.tried[s.type]=true; });
+  const concerns = (Array.isArray(r.concerns)? r.concerns : []).filter(c=>c && c.resolved && state.concernList.some(x=>x.id==c.id));
+  concerns.forEach(c=>{ if (!state.concerns[c.id]) state.concerns[c.id] = {turn:state.turn, reason:c.reason||''}; });
+  if (state.scenario==='booth' && r.boothSpecified) state.booth = true;
+  const fb = r.feedback || {};
+  state.evals.push({turn:state.turn, utter, strategies, concerns, booth:!!r.boothSpecified, good:fb.good||'', improve:fb.improve||''});
+  renderFeedback(state.evals[state.evals.length-1]);
+  renderChecklist();
+
+  const p = progress();
+  if (clipMode){ playClipAnswer(r, p, strategies, concerns, eclip); return; }
+  let end = null, extra = null;
+  if (p.win){ extra = r.acceptReply || '그래, 네 말에 설득됐어. 좋아, 허락할게.'; end = 'win'; }
+  else if (state.turn >= maxTurns()){ extra = END_LINES[state.scenario]; end = 'lose'; }
+  if (early) state.history.push({role:'listener', text:early.text, turn:state.turn});
+  else if (!end) state.history.push({role:'listener', text:r.reply, turn:state.turn});
+  state.busy = false;
+  if (end){ state.over = true; stopTimer(); }
+  updateSend();
+  const finish = end ? ()=>setTimeout(()=>showResult(end), 900) : null;
+  if (end){
+    Avatar.setMood(end==='win' ? 'happy' : 'neutral');
+    state.history.push({role:'listener', text:extra, turn:state.turn});
+    const go = ()=>sayLine(extra, finish);
+    if (early && !early.done) early.after = go; else go();
+  } else {
+    Avatar.setMood(MOODS[r.mood]? r.mood : 'neutral');
+    if (!early) sayLine(r.reply);
+  }
+}
+
+// 대사 영상 모드에서 이번 차례에 틀 영상(앞 조각 + 뒤 조각)을 정함
+function playClipAnswer(r, p, strategies, concerns, eclip){
+  let front = eclip ? eclip.id : 0;
+  if (!front){
+    const solved = concerns.find(c=>state.concerns[c.id] && state.concerns[c.id].turn===state.turn);
+    const ok = strategies.find(s=>s.valid);
+    if (solved) front = {1:10, 2:12, 3:14}[solved.id];
+    else if (ok) front = ok.type==='감성' ? 5 : ok.type==='인성' ? 6 : 4;
+    else if (strategies.some(s=>s.type==='감성' && !s.valid) || r.mood==='annoyed') front = 8;
+    else front = 7;
+  }
+  let back, end = null;
+  if (p.win){ back = 2; end = 'win'; }
+  else if (state.turn >= maxTurns()){ back = 3; end = 'lose'; }
+  else if (conditions(p).filter(c=>!c.ok).length===1) back = 15;
+  else {
+    const left = [1,2,3].filter(id=>!state.concerns[id]);
+    const pick = left.find(id=>id!==state.lastAsk) || left[0];
+    back = pick ? REMAIN_CLIP[pick] : 15; state.lastAsk = pick;
+  }
+  [front, back].forEach(id=>state.history.push({role:'listener', text:Clips.line(id), turn:state.turn}));
+  state.busy = false;
+  if (end){ state.over = true; stopTimer(); }
+  updateSend();
+  const finish = end ? ()=>setTimeout(()=>showResult(end), 900) : null;
+  if (eclip && !eclip.done) eclip.after = ()=>Clips.play([back], finish);
+  else if (eclip) Clips.play([back], finish);
+  else Clips.play([front, back], finish);
+}
+
+function renderFeedback(ev){
+  $('#fbTurn').textContent = `${ev.turn}번째 말`;
+  const chips = ev.strategies.map(s=>`<span class="schip ${s.valid?'v':'x'}" title="${esc(s.reason)}">${s.valid?'✓':'△'} ${esc(s.type)}</span>`).join('')
+    + ev.concerns.map(c=>{ const x = state.concernList.find(k=>k.id==c.id); return `<span class="schip c">걱정 해결: ${esc(x?x.short:'')}</span>`; }).join('')
+    + (ev.booth && state.scenario==='booth' ? `<span class="schip c">부스 계획 ✓</span>` : '');
+  const reasons = ev.strategies.filter(s=>!s.valid && s.reason).map(s=>`<div class="fbmeta">△ ${esc(s.type)}: ${esc(s.reason)}</div>`).join('');
+  $('#feedback').innerHTML = `${chips?`<div class="schips">${chips}</div>`:'<div class="fbmeta">이번 말에서는 인정된 전략이 없어요.</div>'}${reasons}
+    <div class="fbrow good"><b>잘한 점</b>${esc(ev.good)}</div>
+    <div class="fbrow improve"><b>보완할 점</b>${esc(ev.improve)}</div>`;
+}
+
+/* ---------- 모달 ---------- */
+function modal(html){ $('#modalInner').innerHTML = html + `<div style="text-align:right;margin-top:14px"><button class="btn" id="mClose">닫기</button></div>`; $('#modal').classList.remove('hidden'); $('#mClose').onclick=closeModal; }
+function closeModal(){ $('#modal').classList.add('hidden'); }
+$('#modal').onclick = e=>{ if (e.target.id==='modal') closeModal(); };
+$('#logBtn').onclick = ()=>{
+  const L = LISTENERS[state.listener].name;
+  modal(`<h3>대화 기록</h3>` + (state.history.map(h=>{
+    const ev = h.role==='student' ? state.evals.find(e=>e.turn===h.turn) : null;
+    return `<div class="logitem"><span class="${h.role==='student'?'s':'l'}">${h.role==='student'?`나 (${h.turn})`:L}</span> ${esc(h.text)}
+      ${ev?`<div class="fbmeta" style="margin-top:4px">👍 ${esc(ev.good)}<br>✏️ ${esc(ev.improve)}</div>`:''}</div>`;
+  }).join('') || '<p>아직 대화가 없어요.</p>'));
+};
+$('#setBtn').onclick = ()=>{
+  const vs = Voice.voices; const cur = Voice.pick(state.listener);
+  modal(`<h3>소리 설정</h3>
+    <div class="row"><label style="min-width:90px">목소리</label><select id="vSel">${vs.length? vs.map(v=>`<option ${cur&&cur.name===v.name?'selected':''}>${esc(v.name)}</option>`).join('') : '<option>한국어 목소리를 찾지 못했어요</option>'}</select></div>
+    <div class="row"><label style="min-width:90px">말 빠르기</label><input type="range" id="vRate" min="0.7" max="1.3" step="0.05" value="${Voice.rate}"><span id="vRateT">${Voice.rate.toFixed(2)}</span></div>
+    <div class="row"><label><input type="checkbox" id="vOn" ${Voice.enabled?'checked':''}> 소리 내어 말하기</label><label><input type="checkbox" id="vSub" ${Voice.subtitles?'checked':''}> 자막 보이기</label></div>
+    <div class="row"><button class="btn teal" id="vTest">목소리 들어 보기</button></div>
+    <p class="fbmeta">목소리 목록은 사용하는 브라우저와 기기에 따라 달라요. 소리가 안 나면 기기 음량과 '소리 내어 말하기'를 확인하세요.</p>`);
+  $('#vSel').onchange = e=>{ Voice.choice[state.listener] = e.target.value; };
+  $('#vRate').oninput = e=>{ Voice.rate = +e.target.value; $('#vRateT').textContent = Voice.rate.toFixed(2); };
+  $('#vOn').onchange = e=>{ Voice.enabled = e.target.checked && ('speechSynthesis' in window); };
+  $('#vSub').onchange = e=>{ Voice.subtitles = e.target.checked; if (!Voice.subtitles) $('#subtitle').innerHTML=''; };
+  $('#vTest').onclick = ()=>{ closeModal(); sayLine(`안녕, 나는 ${LISTENERS[state.listener].name}${josa(LISTENERS[state.listener].name,'이야','야')}. 이 목소리로 이야기할게.`); };
+};
+$('#quitBtn').onclick = ()=>{
+  modal(`<h3>그만할까요?</h3><p>지금까지의 대화로 결과를 볼 수 있어요.</p><div class="row"><button class="btn big" id="qRes">결과 보기</button><button class="btn ghost" id="qHome">처음으로</button></div>`);
+  $('#qRes').onclick = ()=>{ closeModal(); Voice.stop(); Mic.reset(); state.over=true; showResult(progress().win?'win':'lose'); };
+  $('#qHome').onclick = ()=>{ closeModal(); Voice.stop(); Mic.reset(); goHome(); };
+};
+function goHome(){ stopTimer(); state.over = true; $('#talk').classList.add('hidden'); $('#result').classList.add('hidden'); $('#setup').classList.remove('hidden'); Avatar.el=null; renderSetup(); }
+
+/* ---------- 결과 ---------- */
+function showResult(kind){
+  stopTimer(); Voice.stop(); Mic.reset();
+  const p = progress(), L = LISTENERS[state.listener].name, sc = SCENARIOS[state.scenario];
+  const win = kind==='win';
+  const typeRow = t=>{ const g = state.got[t]; return `<li class="${g?'ok':''}"><span class="box"></span><div><div class="t">${t}</div><div class="d">${g?`${g.turn}번째 말: "${esc(g.quote)}"`:(state.tried[t]?'시도했지만 인정되지 않았어요':'사용하지 않았어요')}</div></div></li>`; };
+  const turnsUsed = state.evals.length;
+  const report = buildReport(win, kind);
+  $('#result').innerHTML = `
+    <div class="result-hero ${win?'win':'lose'}">
+      <div class="face" id="resFace"></div>
+      <div>
+        <span class="tag">${sc.title}${state.scenario==='item'?' · '+esc(state.item):state.scenario==='pet'?' · '+state.pet:''} · ${LV().name}</span>
+        <h1 style="margin-top:8px">${win? `설득 성공! 🎉` : kind==='timeout' ? '시간 초과! ⏱' : '아쉽지만 이번엔 설득 실패'}</h1>
+        <p>${win? `${turnsUsed}번 만에 ${L}${josa(L,'을','를')} 설득했어요.` : kind==='timeout' ? `7분 30초가 지나서 대화가 끝났어요. 아래에서 부족했던 부분을 확인하고 다시 도전해 보세요.` : `조건을 다 채우지 못했어요. 아래에서 부족했던 부분을 확인하고 다시 도전해 보세요.`}
+        ${LV().hints?` · 힌트 ${state.hints}번 사용`:''}</p>
+      </div>
+    </div>
+    <div class="rgrid">
+      <div class="panel"><h3>사용한 설득 전략</h3>
+        <ul class="check">${['귀납','연역','유추','통계·자료','전문가 의견','사실·사례','감성','인성'].map(typeRow).join('')}</ul></div>
+      <div>
+        <div class="panel"><h3>성공 조건</h3><ul class="check">
+          ${conditions(p).map(c=>[c.t,c.ok]).map(([t,ok])=>`<li class="${ok?'ok':''}"><span class="box"></span><div class="t">${t}</div></li>`).join('')}
+        </ul>
+        <ul class="concern-list" style="margin-top:10px">${state.concernList.map(c=>`<li class="${state.concerns[c.id]?'y':'n'}">${c.short}${state.concerns[c.id]?` (${state.concerns[c.id].turn}번째 말) ${esc(state.concerns[c.id].reason)}`:''}</li>`).join('')}</ul></div>
+        <div class="panel"><h3>결과 복사해서 제출하기</h3>
+          <textarea class="report" id="report" readonly>${esc(report)}</textarea>
+          <div class="row"><button class="btn teal" id="copyBtn">결과 복사</button><span class="fbmeta" id="copyMsg"></span></div></div>
+      </div>
+    </div>
+    <div class="panel"><h3>말할 때마다 받은 피드백</h3>
+      ${state.evals.map(ev=>`<div class="turnfb"><div class="q">${ev.turn}. "${esc(ev.utter)}"</div>
+        <div class="schips" style="margin-bottom:6px">${ev.strategies.map(s=>`<span class="schip ${s.valid?'v':'x'}">${s.valid?'✓':'△'} ${esc(s.type)}</span>`).join('')}</div>
+        <div class="fbrow good"><b>잘한 점</b>${esc(ev.good)}</div><div class="fbrow improve" style="margin-top:6px"><b>보완할 점</b>${esc(ev.improve)}</div></div>`).join('') || '<p class="fbmeta">기록된 피드백이 없어요.</p>'}
+    </div>
+    <div class="row" style="justify-content:center;margin:10px 0 30px">
+      <button class="btn big" id="againBtn">같은 상황 다시 하기</button><button class="btn ghost" id="homeBtn">다른 상황 고르기</button>
+    </div>`;
+  $('#talk').classList.add('hidden'); $('#result').classList.remove('hidden');
+  const host = $('#resFace'); Avatar.mount(host, state.listener); Avatar.setMood(win?'happy':'doubtful'); Avatar.setMode('idle');
+  $('#copyBtn').onclick = async ()=>{
+    try{ await navigator.clipboard.writeText(report); $('#copyMsg').textContent='복사했어요!'; }
+    catch(e){ const t=$('#report'); t.focus(); t.select(); $('#copyMsg').textContent='선택된 글을 Ctrl+C(⌘+C)로 복사하세요.'; }
+  };
+  $('#againBtn').onclick = startGame; $('#homeBtn').onclick = goHome;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function buildReport(win, kind){
+  const p = progress(), L = LISTENERS[state.listener].name, sc = SCENARIOS[state.scenario];
+  const lines = [];
+  lines.push(`[말로 설득하기 결과] ${state.name||'(이름 없음)'}`);
+  lines.push(`상황: ${sc.title}${state.scenario==='item'?' ('+state.item+')':state.scenario==='pet'?' ('+state.pet+')':''} / 청자: ${L} / 난이도: ${LV().name}`);
+  lines.push(`결과: ${win?`성공 (${state.evals.length}번째 말)`:kind==='timeout'?'실패 (시간 초과)':'실패'}${LV().hints?` / 힌트 ${state.hints}번`:''}`);
+  lines.push(`인정된 전략: ${Object.entries(state.got).map(([t,g])=>`${t}(${g.turn})`).join(', ')||'없음'}`);
+  lines.push(`해결한 걱정: ${state.concernList.filter(c=>state.concerns[c.id]).map(c=>c.short).join(', ')||'없음'}${state.scenario==='booth'?` / 부스 계획: ${state.booth?'제시함':'부족'}`:''}`);
+  lines.push('— 대화와 피드백 —');
+  state.evals.forEach(ev=>{
+    lines.push(`${ev.turn}. 나: ${ev.utter}`);
+    lines.push(`   잘한 점: ${ev.good}`);
+    lines.push(`   보완할 점: ${ev.improve}`);
+  });
+  return lines.join('\n');
+}
+
+/* ---------- init ---------- */
+Voice.init();
+renderSetup();
+</script>
+</body>
+</html>
