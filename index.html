@@ -442,12 +442,17 @@ const EXAMPLES = {
   }
 };
 
-const STILL = { mom:'media/mom/poster.jpg' };
+const STILL = { mom:'media/mom/poster.jpg', dad:'media/dad/poster.jpg' };
 // 캐릭터 영상: 업로드된 영상 파일 경로를 넣으면 자동으로 사용 (없으면 사진만 표시)
 const MEDIA = {
   // 엄마: 대사 시트 번호(1~15)마다 입 모양까지 맞춘 영상. AI가 판정한 뒤 알맞은 영상을 골라 틀어 줌
   mom:{ idleLoop:'media/mom/idle.mp4', clips:{"1": "media/mom/1.mp4", "2": "media/mom/2.mp4", "3": "media/mom/3.mp4", "4": "media/mom/4.mp4", "5": "media/mom/5.mp4", "6": "media/mom/6.mp4", "7": "media/mom/7.mp4", "8": "media/mom/8.mp4", "9": "media/mom/9.mp4", "10": "media/mom/10.mp4", "11": "media/mom/11.mp4", "12": "media/mom/12.mp4", "13": "media/mom/13.mp4", "14": "media/mom/14.mp4", "15": "media/mom/15.mp4"},
-    lines:{"1": "그걸 사 달라고? 엄마는 걱정이 좀 돼. 너무 비싸고, 공부도 안 할까 봐. 지금 쓰는 것도 멀쩡하잖아. 엄마를 한번 설득해 봐.", "2": "그래, 네 말을 들으니 엄마가 설득됐어. 사 줄게. 대신 약속은 꼭 지켜!", "3": "오늘은 여기까지 하자. 아직은 엄마 마음이 안 정해졌어. 더 생각해 보고 다시 얘기해.", "4": "그렇게 근거를 대니까 일리가 있네.", "5": "아이고, 그렇게 말하니 엄마 마음이 좀 약해지네.", "6": "그래, 네가 그렇게까지 하는 걸 보니 믿음이 간다.", "7": "음, 그것만으로는 잘 모르겠어. 다른 이유를 더 말해 봐.", "8": "그렇게 조른다고 되는 게 아니야. 엄마가 납득할 이유를 말해 봐.", "9": "그래도 너무 비싸잖아. 그 돈은 어떻게 할 건데?", "10": "그렇게 하면 돈 걱정은 좀 덜겠네.", "11": "근데 그게 생기면 공부는 언제 해? 그게 제일 걱정이야.", "12": "그 약속대로만 하면 공부 걱정은 안 해도 되겠네.", "13": "지금 쓰는 것도 멀쩡한데, 왜 꼭 새로 사야 해?", "14": "듣고 보니 꼭 필요하긴 하겠네.", "15": "엄마 마음이 거의 넘어갔어. 하나만 더 말해 봐."} }
+    lines:{"1": "그걸 사 달라고? 엄마는 걱정이 좀 돼. 너무 비싸고, 공부도 안 할까 봐. 지금 쓰는 것도 멀쩡하잖아. 엄마를 한번 설득해 봐.", "2": "그래, 네 말을 들으니 엄마가 설득됐어. 사 줄게. 대신 약속은 꼭 지켜!", "3": "오늘은 여기까지 하자. 아직은 엄마 마음이 안 정해졌어. 더 생각해 보고 다시 얘기해.", "4": "그렇게 근거를 대니까 일리가 있네.", "5": "아이고, 그렇게 말하니 엄마 마음이 좀 약해지네.", "6": "그래, 네가 그렇게까지 하는 걸 보니 믿음이 간다.", "7": "음, 그것만으로는 잘 모르겠어. 다른 이유를 더 말해 봐.", "8": "그렇게 조른다고 되는 게 아니야. 엄마가 납득할 이유를 말해 봐.", "9": "그래도 너무 비싸잖아. 그 돈은 어떻게 할 건데?", "10": "그렇게 하면 돈 걱정은 좀 덜겠네.", "11": "근데 그게 생기면 공부는 언제 해? 그게 제일 걱정이야.", "12": "그 약속대로만 하면 공부 걱정은 안 해도 되겠네.", "13": "지금 쓰는 것도 멀쩡한데, 왜 꼭 새로 사야 해?", "14": "듣고 보니 꼭 필요하긴 하겠네.", "15": "엄마 마음이 거의 넘어갔어. 하나만 더 말해 봐."},
+    sec:{1:11,2:7,3:7,4:4,5:5,6:5,7:5,8:5,9:4,10:4,11:5,12:5,13:4,14:4,15:4}, rest:[[0.0, 1.542], [1.833, 2.458], [3.333, 5.042], [5.333, 6.25], [7.125, 8.667], [8.958, 9.792], [11.625, 13.792], [14.667, 16.792], [17.667, 18.458], [18.75, 20.375], [21.25, 21.708], [22.0, 24.125], [25.958, 26.917], [27.208, 28.25], [30.083, 31.042], [31.333, 32.75], [33.625, 36.167], [37.042, 39.375], [40.25, 43.167], [45.0, 45.458], [45.75, 47.292], [48.167, 48.917], [49.208, 50.333], [51.208, 54.208], [56.042, 58.333], [59.208, 59.75], [60.042, 62.25]] },
+  // 아빠(여행 상황): 대사 시트 '아빠·여행 대사' 1~15번. 영상마다 얼굴 크기와 위치를 맞추고, 처음과 끝을 듣는 화면과 부드럽게 겹쳐 이어지게 만듦
+  dad:{ idleLoop:'media/dad/idle.mp4', clips:{"1": "media/dad/1.mp4", "2": "media/dad/2.mp4", "3": "media/dad/3.mp4", "4": "media/dad/4.mp4", "5": "media/dad/5.mp4", "6": "media/dad/6.mp4", "7": "media/dad/7.mp4", "8": "media/dad/8.mp4", "9": "media/dad/9.mp4", "10": "media/dad/10.mp4", "11": "media/dad/11.mp4", "12": "media/dad/12.mp4", "13": "media/dad/13.mp4", "14": "media/dad/14.mp4", "15": "media/dad/15.mp4"},
+    lines:{"1": "친구들끼리만 2박 3일이라. 아빠는 먼저 안전이 걱정이다. 계획은 세웠는지, 연락은 잘 될지, 경비는 어떻게 할지도 궁금하고. 아빠가 납득할 수 있게 말해 봐.", "2": "좋아, 네 말을 들으니 믿어 볼 만하다. 다녀와. 대신 하루에 두 번은 꼭 연락해야 돼.", "3": "오늘은 여기까지 하자. 계획을 더 다듬어서 다시 얘기해 보자.", "4": "그렇게 근거를 대니 앞뒤가 맞는구나.", "5": "네가 그렇게까지 간절한 줄은 몰랐다. 그렇게 말하니 아빠 마음도 좀 움직이는구나.", "6": "그렇게까지 준비한 걸 보니 믿어도 되겠구나.", "7": "그것만으로는 판단하기 어렵다. 다른 이유를 더 말해 봐.", "8": "떼쓴다고 될 일이 아니다. 아빠가 납득할 이유를 말해 봐.", "9": "그래도 어른 없이 가는 건 걱정이다. 무슨 일 생기면 어떻게 할 거야?", "10": "그렇게 대비해 둔다면 안전 걱정은 좀 덜겠구나.", "11": "숙소랑 일정은 정했니? 연락은 어떻게 할 거야?", "12": "일정이랑 연락 방법까지 정했으면 그건 됐다.", "13": "경비가 꽤 들 텐데, 그 돈은 어떻게 할 거야?", "14": "그렇게 하면 돈 걱정은 좀 덜겠다.", "15": "아빠 마음이 거의 넘어갔다. 하나만 더 말해 봐."},
+    sec:{"1": 9, "2": 7, "3": 6, "4": 4, "5": 6, "6": 4, "7": 5, "8": 5, "9": 6, "10": 4, "11": 4, "12": 4, "13": 4, "14": 4, "15": 4}, rest:[[0, 9.6]] }
 };
 
 /* =========================================================
@@ -455,6 +460,7 @@ const MEDIA = {
    ========================================================= */
 const CHAR = {
   mom:{video:'mom'},   // 실사 영상 캐릭터 (영상이 없으면 주방 사진)
+  dadTrip:{video:'dad'},   // 여행 상황의 아빠: 실사 대사 영상 (반려동물 상황은 그림 캐릭터)
   dad:{skin:'#eec3a1', shade:'#dba985', hair:'#1f1f24', lip:'#b45a55', bg:'home',
     back:'',
     front:`<path d="M163 162 C156 88 210 62 246 64 C294 66 326 98 317 162 C312 128 298 110 278 104 C250 96 214 98 190 114 C176 126 168 142 163 162 Z" fill="#1f1f24"/>
@@ -662,32 +668,35 @@ void main(){
 /* 대사 영상 재생기: 정해진 대사 영상을 차례로 틀고, 사이사이는 정지 화면 */
 const FRONT_CLIP = {'이성':4,'감성':5,'인성':6,'부족':7,'떼쓰기':8,'해결1':10,'해결2':12,'해결3':14};
 const REMAIN_CLIP = {1:9, 2:11, 3:13};
-const CLIP_SEC = {1:11,2:7,3:7,4:4,5:5,6:5,7:5,8:5,9:4,10:4,11:5,12:5,13:4,14:4,15:4};
-// 듣는 영상에서 정면을 보고 가만히 있는 구간(초). 대사 영상은 이 장면에서 시작하고 이 장면으로 끝남
-const IDLE_REST = [[0.0, 1.542], [1.833, 2.458], [3.333, 5.042], [5.333, 6.25], [7.125, 8.667], [8.958, 9.792], [11.625, 13.792], [14.667, 16.792], [17.667, 18.458], [18.75, 20.375], [21.25, 21.708], [22.0, 24.125], [25.958, 26.917], [27.208, 28.25], [30.083, 31.042], [31.333, 32.75], [33.625, 36.167], [37.042, 39.375], [40.25, 43.167], [45.0, 45.458], [45.75, 47.292], [48.167, 48.917], [49.208, 50.333], [51.208, 54.208], [56.042, 58.333], [59.208, 59.75], [60.042, 62.25]];
+// 상황별 대사 영상 묶음 (없으면 그림 캐릭터 + 브라우저 목소리)
+function clipKey(){ return state.listener==='mom' && state.scenario==='item' ? 'mom' : state.listener==='dad' && state.scenario==='trip' ? 'dad' : null; }
+// 화면에 띄울 캐릭터 (여행 상황의 아빠는 실사 영상)
+function avKey(l){ l = l || state.listener; return l==='dad' && state.scenario==='trip' ? 'dadTrip' : l; }
+// MEDIA.*.rest: 듣는 영상에서 정면을 보고 가만히 있는 구간(초). 대사 영상은 이 장면에서 시작하고 이 장면으로 끝남
 const Clips = {
   token:0, front:0, timer:null, blobs:{},
-  on(){ return state.listener==='mom' && state.scenario==='item' && !!(MEDIA.mom && MEDIA.mom.clips); },
+  M(){ return MEDIA[clipKey()] || {}; },
+  on(){ const k = clipKey(); return !!(k && MEDIA[k] && MEDIA[k].clips); },
   els(){ const V = Avatar.vid; return V && V.el.isConnected && V.slots ? V.slots : null; },
   idle(){ const V = Avatar.vid; return V && V.idleEl; },
-  line(id){ return MEDIA.mom.lines[id] || ''; },
-  url(id){ return this.blobs[id] || MEDIA.mom.clips[id]; },
+  line(id){ return (this.M().lines||{})[id] || ''; },
+  url(id){ const k = clipKey(); return (this.blobs[k]||{})[id] || (this.M().clips||{})[id]; },
   preload(){
-    if (this._pre) return; this._pre = true;
-    fetch(MEDIA.mom.idleLoop).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) this.idleBlob = URL.createObjectURL(b); }).catch(()=>{});
-    Object.entries(MEDIA.mom.clips).forEach(([id,u])=>{
-      fetch(u).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) this.blobs[id] = URL.createObjectURL(b); }).catch(()=>{});
+    const k = clipKey(), M = this.M(); if (!k || this.blobs[k]) return; const B = this.blobs[k] = {};
+    fetch(M.idleLoop).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) B.idle = URL.createObjectURL(b); }).catch(()=>{});
+    Object.entries(M.clips).forEach(([id,u])=>{
+      fetch(u).then(r=>r.ok? r.blob() : null).then(b=>{ if (b) B[id] = URL.createObjectURL(b); }).catch(()=>{});
     });
   },
   atRest(){ const iv = this.idle(); if (!iv) return true; const t = iv.currentTime;
-    return IDLE_REST.some(([a,b])=>t>=a && t<=b-0.15); },
+    return (this.M().rest||[[0,999]]).some(([a,b])=>t>=a && t<=b-0.15); },
   // 듣는 영상을 '가만히 있는 구간'의 처음으로 옮겨 멈춰 둠 (대사 영상 뒤에 가려져 있을 때)
   parkIdle(){ const iv = this.idle(); if (!iv) return; try{ iv.pause();
-    const t = iv.currentTime, runs = IDLE_REST.filter(([a,b])=>b-a>=1.2);
+    const t = iv.currentTime, idleBlob = (this.blobs[clipKey()]||{}).idle, runs = (this.M().rest||[[0,999]]).filter(([a,b])=>b-a>=1.2);
     const r = runs.find(([a])=>a>t) || runs[0];
     // 미리 받아 둔 듣는 영상으로 바꿔 두면 원하는 장면으로 정확히 옮길 수 있음 (가려져 있을 때만)
-    if (this.idleBlob && iv.getAttribute('src')!==this.idleBlob){
-      iv.setAttribute('src', this.idleBlob); iv.addEventListener('loadedmetadata', ()=>{ try{ iv.currentTime = r[0]; }catch(e){} }, {once:true}); iv.load();
+    if (idleBlob && iv.getAttribute('src')!==idleBlob){
+      iv.setAttribute('src', idleBlob); iv.addEventListener('loadedmetadata', ()=>{ try{ iv.currentTime = r[0]; }catch(e){} }, {once:true}); iv.load();
     } else iv.currentTime = r[0]; }catch(e){} },
   resumeIdle(){ const iv = this.idle(); if (iv){ const p = iv.play(); if (p && p.catch) p.catch(()=>{}); } },
   visible(){ const vs = this.els(); return vs ? vs.find(v=>v.style.opacity==='1') : null; },
@@ -719,12 +728,12 @@ const Clips = {
         const hand = ()=>{ if (handed || tok!==this.token) return; handed = true; clearTimeout(this.timer);
           if (ids.length) next(); else finish(); };
         v.onended = hand;
-        this.timer = setTimeout(hand, ((CLIP_SEC[id]||6)+4)*1000);
+        this.timer = setTimeout(hand, (((this.M().sec||{})[id]||6)+4)*1000);
         const pr = v.play();
         if (pr && pr.then) pr.then(()=>{ if (v.onplaying) setTimeout(()=>{ if (v.onplaying && !v.paused) v.onplaying(); }, 120); }).catch(()=>{});
         if (pr && pr.catch) pr.catch(()=>{ // 영상을 틀 수 없으면 목소리로라도 말함
           if (tok!==this.token || handed) return; handed = true; clearTimeout(this.timer); v.style.opacity = 0;
-          Voice.speak(this.line(id), 'mom', ()=>{ if (tok===this.token){ ids.length ? next() : finish(); } }); });
+          Voice.speak(this.line(id), state.listener, ()=>{ if (tok===this.token){ ids.length ? next() : finish(); } }); });
       };
       // 듣는 영상이 보이는 중이면, 끄덕임이나 깜빡임이 끝나 정면 정지 장면일 때 시작
       if (this.visible()) go();
@@ -1262,10 +1271,10 @@ function renderSetup(){
   const ci = $('#customItem'); if (ci){ ci.oninput=()=>{ state.item = ci.value.trim() || ITEMS[0]; updateGoal(); document.querySelectorAll('[data-item]').forEach(b=>b.classList.toggle('on', b.dataset.item===state.item)); ci.parentElement.classList.toggle('on', !!ci.value.trim()); }; }
   $('#listenerRow').classList.toggle('hidden', !sc);
   if (sc){
-    $('#listenerPick').innerHTML = sc.listeners.map(l=>`<button class="lp ${state.listener===l?'on':''}" data-l="${l}"><span class="mini">${avatarSVG(l)}</span><span>${LISTENERS[l].name}</span></button>`).join('');
+    $('#listenerPick').innerHTML = sc.listeners.map(l=>`<button class="lp ${state.listener===l?'on':''}" data-l="${l}"><span class="mini">${avatarSVG(avKey(l))}</span><span>${LISTENERS[l].name}</span></button>`).join('');
     document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{ state.listener=b.dataset.l; renderSetup(); });
     // mini 아바타 표정 정적 세팅
-    document.querySelectorAll('.lp').forEach(b=>staticFace(b.querySelector('svg'), b.dataset.l));
+    document.querySelectorAll('.lp').forEach(b=>staticFace(b.querySelector('svg'), avKey(b.dataset.l)));
   }
   updateGoal();
 }
@@ -1315,7 +1324,7 @@ function startGame(){
   $('#talkTitle').textContent = sc.emoji+' '+sc.title + (state.scenario==='item'? ` · ${state.item}`: state.scenario==='pet'? ` · ${state.pet}`:'');
   $('#levelBadge').className = 'badge '+state.level; $('#levelBadge').textContent = LV().name;
   $('#whoTag').textContent = LISTENERS[state.listener].name;
-  Avatar.mount($('#avatarHost'), state.listener); Avatar.setMood('doubtful');
+  Avatar.mount($('#avatarHost'), avKey()); Avatar.setMood('doubtful');
   $('#playOver').classList.remove('hidden'); $('#subtitle').innerHTML=''; $('#replayBtn').classList.add('hidden');
   $('#feedback').innerHTML = '<div class="empty">말을 하면 선생님이 잘한 점과 보완할 점을 알려 줄 거예요.</div>'; $('#fbTurn').textContent='';
   $('#errBox').innerHTML=''; $('#hintBox').innerHTML=''; $('#say').value=''; $('#voiceHelp').innerHTML='';
@@ -1719,7 +1728,7 @@ function showResult(kind){
       <button class="btn big" id="againBtn">같은 상황 다시 하기</button><button class="btn ghost" id="homeBtn">다른 상황 고르기</button>
     </div>`;
   $('#talk').classList.add('hidden'); $('#result').classList.remove('hidden');
-  const host = $('#resFace'); Avatar.mount(host, state.listener); Avatar.setMood(win?'happy':'doubtful'); Avatar.setMode('idle');
+  const host = $('#resFace'); Avatar.mount(host, avKey()); Avatar.setMood(win?'happy':'doubtful'); Avatar.setMode('idle');
   $('#copyBtn').onclick = async ()=>{
     try{ await navigator.clipboard.writeText(report); $('#copyMsg').textContent='복사했어요!'; }
     catch(e){ const t=$('#report'); t.focus(); t.select(); $('#copyMsg').textContent='선택된 글을 Ctrl+C(⌘+C)로 복사하세요.'; }
